@@ -12,7 +12,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-public class ProjectControllerApi {
+public class ProjectApiController {
 
     private final ProjectRepository projectRepository;
 

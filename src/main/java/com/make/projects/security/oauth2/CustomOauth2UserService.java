@@ -6,6 +6,7 @@ import com.make.projects.entity.enumType.Role;
 import com.make.projects.exception.OAuth2AuthenticationEx;
 import com.make.projects.repository.UserRepository;
 import com.make.projects.security.UserPrincipal;
+import com.make.projects.security.oauth2.user.KakaoOAuth2UserInfo;
 import com.make.projects.security.oauth2.user.OAuth2UserInfo;
 import com.make.projects.security.oauth2.user.OAuth2UserInfoFactory;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,8 +27,9 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-        System.out.println("카카오"+ oAuth2UserRequest);
-        System.out.println("카카오 = " + oAuth2User.getAttributes());
+        System.out.println("토큰 = " + oAuth2UserRequest.getAccessToken().getTokenValue());
+        System.out.println("어떤 사이트 = " + oAuth2UserRequest.getClientRegistration().getRegistrationId());
+        System.out.println("소셜로그인 정보 = " + oAuth2User.getAttributes());
         try {
             return processOAuth2User(oAuth2UserRequest, oAuth2User);
         }catch (OAuth2AuthenticationException ex){
@@ -39,7 +40,8 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     }
 
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
-        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2User.getAttributes());
+
+         OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2User.getAttributes());
 
         if(StringUtils.isEmpty(oAuth2UserInfo.getEmail())){
             throw new OAuth2AuthenticationEx("이메일을 찾을 수 없습니다.");

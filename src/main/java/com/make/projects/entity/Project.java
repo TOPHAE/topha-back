@@ -1,6 +1,6 @@
 package com.make.projects.entity;
 
-import com.make.projects.entity.date.InheritTime;
+import com.make.projects.entity.Common.CommonDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +14,11 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Project extends InheritTime {
+public class Project extends CommonDate {
 
     @Id
     @GeneratedValue
-    @Column(name = "PROJECTID")
+    @Column(name = "projectId")
     private Long id;
 
     private String title;
@@ -33,12 +33,12 @@ public class Project extends InheritTime {
     private String userSpec;
 
     @ElementCollection //값 타입 컬렉션입니다
-    @CollectionTable(name ="TECH",joinColumns = @JoinColumn(name = "PROJECTID")) //컬렉션 테이블 생성,외래키로지정 만들어질 테이블에
+    @CollectionTable(name ="TECH",joinColumns = @JoinColumn(name = "projectId")) //컬렉션 테이블 생성,외래키로지정 만들어질 테이블에
     @Column(name = "TECH")
     private Set<String> tech = new HashSet<>();
 
     @ElementCollection //값 타입 컬렉션입니다
-    @CollectionTable(name ="SPEC",joinColumns = @JoinColumn(name = "PROJECTID")) //컬렉션 테이블 생성,외래키로지정 만들어질 테이블에
+    @CollectionTable(name ="SPEC",joinColumns = @JoinColumn(name = "projectId")) //컬렉션 테이블 생성,외래키로지정 만들어질 테이블에
     @Column(name = "SPEC")
     private Set<String> spec = new HashSet<>();
 

@@ -14,7 +14,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update   #애플리케이션  실행시점에 내가가지고잇는 엔티티를지우고(테이블) 다시생성
+      ddl-auto: create   #애플리케이션  실행시점에 내가가지고잇는 엔티티를지우고(테이블) 다시생성
     properties:
       hibernate:
         #show_sql: true    #엔 sout에 출력해서  안쓰는게좋다
@@ -26,6 +26,48 @@ spring:
       pageable:
         default-page-size: 10
         max-page-size: 2000
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 251592878751-hde0mp1rhrduev9r6i822osm1r9bi88g.apps.googleusercontent.com
+            client-secret:
+              PcBIXfjuKmR1fRpH6GRCy1V7
+            scope: #우리가 리소스 오너(구글)에게 요청하는 승낙받아야하는 사용하고자하는 기능을 스콥이라함
+              - email
+              - profile
+
+          facebook:
+            client-id: 259294199111035
+            client-secret: 26f0055f04462d961d2231e7394edfbf
+            scope:
+              - email
+              - public_profile
+
+
+          kakao:
+            client-id: 07c9a89123e46ae5f72c72e9e0423d02
+            client-secret: MVQJF2zabDZwmSrcmiFBihUPmusj2cAu
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+
+            scope:
+              - profile
+              - account_email
+
+            client-authentication-method: POST
+            client-name: kakao
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+
 logging:
   level:
     org.hibernate.SQL: debug #logger 출력
