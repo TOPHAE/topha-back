@@ -10,7 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+/*https://github.com/keumtae-kim/spring-boot-react-blog*/
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -21,6 +22,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOauth2UserService customOauth2UserService;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -40,8 +42,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
             .and()
                 .oauth2Login()
-                .userInfoEndpoint()
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorize")
+                .and()
+                .redirectionEndpoint()
+                .baseUri("/oauth2/callback/*")
+                .and()
+                .userInfoEndpoint() //oauth2Login 성공 이후의 설정을 시작
                 .userService(customOauth2UserService);
+    }
+    /*   .authorizationEndpoint()
+                .baseUri("/oauth/authorize")
+            .and()
+                .redirectionEndpoint()
+                .baseUri("/oauth2/callback/*")
+            .and()*/
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
