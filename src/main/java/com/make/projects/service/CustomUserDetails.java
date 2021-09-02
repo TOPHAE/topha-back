@@ -1,23 +1,24 @@
-package com.make.projects.security;
-
-import com.make.projects.entity.Users;
-import com.make.projects.entity.enumType.Role;
+package com.make.projects.service;
+import com.make.projects.model.domain.Users;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.*;
 
-public class UserPrincipal implements OAuth2User, UserDetails {
+public class CustomUserDetails implements OAuth2User, UserDetails {
 
-    private  Users user;
+    private Users user;
     private Map<String,Object> attributes; //auth정보받을곳
 
 
-    public UserPrincipal(Users user, Map<String, Object> attributes) {
+    public CustomUserDetails(Users user, Map<String, Object> attributes) {
         this.user = user;
         this.attributes = attributes;
+    }
+
+    public CustomUserDetails(Users user) {
+        this.user=user;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         collection.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return user.getRoles().name();
+                return user.getRoles();
             }
         });
         return collection;
