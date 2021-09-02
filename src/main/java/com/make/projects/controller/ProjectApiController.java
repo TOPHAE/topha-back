@@ -1,6 +1,6 @@
 package com.make.projects.controller;
 
-import com.make.projects.entity.Project;
+import com.make.projects.model.domain.Project;
 import com.make.projects.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ public class ProjectApiController {
     private final ProjectRepository projectRepository;
 
 
-    @PostMapping("/api/project/save")
+    @PostMapping("/project/save")
     public ResponseEntity<Project> projectSave(@RequestBody Project project){
         projectRepository.save(project);
         return new ResponseEntity<>(HttpStatus.OK);
