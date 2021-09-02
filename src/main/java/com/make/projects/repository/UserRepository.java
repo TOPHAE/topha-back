@@ -1,6 +1,6 @@
 package com.make.projects.repository;
 
-import com.make.projects.entity.Users;
+import com.make.projects.model.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
