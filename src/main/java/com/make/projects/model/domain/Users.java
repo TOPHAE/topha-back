@@ -1,14 +1,14 @@
-package com.make.projects.entity;
-
-import com.make.projects.entity.Common.CommonDate;
-import com.make.projects.entity.enumType.Provider;
-import com.make.projects.entity.enumType.Role;
+package com.make.projects.model.domain;
+import com.make.projects.model.domain.enumType.Provider;
 import lombok.*;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,13 +32,17 @@ public class Users extends CommonDate {
 
     private String imgUrl;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role roles;
+    private String roles;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
+    public List<String> getRoleList(){
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
 
 }
