@@ -1,15 +1,32 @@
 package com.make.projects.exception;
 
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.http.HttpStatus;
 
-public class OAuth2AuthenticationEx extends AuthenticationException {
+public class OAuth2AuthenticationEx extends RuntimeException {
 
+    private HttpStatus httpStatus;
 
-    public OAuth2AuthenticationEx(String msg, Throwable cause) {
-        super(msg, cause);
+    public OAuth2AuthenticationEx(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
     }
 
-    public OAuth2AuthenticationEx(String msg) {
-        super(msg);
+    public OAuth2AuthenticationEx(String message, HttpStatus httpStatus) {
+        super(message);
+        this.httpStatus = httpStatus;
+    }
+
+    public OAuth2AuthenticationEx(String message, Throwable cause, HttpStatus httpStatus) {
+        super(message, cause);
+        this.httpStatus = httpStatus;
+    }
+
+    public OAuth2AuthenticationEx(Throwable cause, HttpStatus httpStatus) {
+        super(cause);
+        this.httpStatus = httpStatus;
+    }
+
+    public OAuth2AuthenticationEx(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, HttpStatus httpStatus) {
+        super(message, cause, enableSuppression, writableStackTrace);
+        this.httpStatus = httpStatus;
     }
 }
