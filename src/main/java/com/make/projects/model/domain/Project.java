@@ -1,6 +1,5 @@
-package com.make.projects.entity;
+package com.make.projects.model.domain;
 
-import com.make.projects.entity.Common.CommonDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
