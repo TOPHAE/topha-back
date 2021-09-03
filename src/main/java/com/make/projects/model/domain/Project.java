@@ -1,18 +1,18 @@
 package com.make.projects.model.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-@EntityListeners(AuditingEntityListener.class)
-@Entity
+@Builder
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Entity
 public class Project extends CommonDate {
 
     @Id
@@ -41,5 +41,21 @@ public class Project extends CommonDate {
     @Column(name = "SPEC")
     private Set<String> spec = new HashSet<>();
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_Id")
+    private Users user;
+
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
+    private List<Comments> comments = new ArrayList<>();
+
+
+    public void setUserProject(Users user){
+        if(this.user != null) {
+            this.user.getProjects().remove(this);
+        }
+        this.user = user;
+        user.getProjects().add(this);
+    }
 
 }
