@@ -1,5 +1,6 @@
 package com.make.projects.model.domain;
 import com.make.projects.model.domain.enumType.Provider;
+import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ public class Users extends CommonDate {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false)
     private Long userId;
 
     @Column(nullable = false)
@@ -35,6 +35,12 @@ public class Users extends CommonDate {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Provider provider;
+
+    @OneToMany(mappedBy = "user")
+    private List<Project> projects = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comments> comments = new ArrayList<>();
 
 
     public List<String> getRoleList(){
