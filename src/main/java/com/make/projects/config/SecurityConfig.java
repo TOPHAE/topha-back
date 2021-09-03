@@ -1,6 +1,6 @@
 package com.make.projects.config;
 
-import com.make.projects.exception.Http401ErrorEntryPoint;
+import com.make.projects.exception.authexception.Http401ErrorEntryPoint;
 import com.make.projects.security.jwt.JwtAuthFilter;
 import com.make.projects.security.oauth2.CustomOAuth2UserService;
 import com.make.projects.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
@@ -68,11 +68,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers(HttpMethod.GET,"/api/users/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/projects/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/comments/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/projects/**").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.POST,"/api/comments/**").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.GET,"/api/user/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/project/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/comment/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/project/**").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.POST,"/api/comment/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
             .and()
