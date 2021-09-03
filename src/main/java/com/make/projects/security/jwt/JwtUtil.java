@@ -1,5 +1,4 @@
 package com.make.projects.security.jwt;
-import com.auth0.jwt.JWT;
 import com.make.projects.config.ApplicationProperties;
 import com.make.projects.service.CustomUserDetails;
 import io.jsonwebtoken.*;
