@@ -1,6 +1,7 @@
 package com.make.projects.security.oauth2;
 
-import com.make.projects.exception.OAuth2AuthenticationEx;
+import com.make.projects.exception.authexception.InternalAuthenticationServiceException;
+import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import com.make.projects.model.domain.Users;
 import com.make.projects.model.domain.enumType.Provider;
 import com.make.projects.repository.UserRepository;
@@ -9,7 +10,6 @@ import com.make.projects.security.oauth2.user.OAuth2UserInfoFactory;
 import com.make.projects.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
