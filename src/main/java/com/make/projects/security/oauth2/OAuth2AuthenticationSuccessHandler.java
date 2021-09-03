@@ -2,9 +2,8 @@ package com.make.projects.security.oauth2;
 
 import com.make.projects.common.util.CookieUtils;
 import com.make.projects.config.ApplicationProperties;
-import com.make.projects.exception.OAuth2AuthenticationEx;
+import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import com.make.projects.security.jwt.JwtUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

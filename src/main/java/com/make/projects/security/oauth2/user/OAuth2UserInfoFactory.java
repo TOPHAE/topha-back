@@ -1,7 +1,7 @@
 package com.make.projects.security.oauth2.user;
 
 import com.make.projects.model.domain.enumType.Provider;
-import com.make.projects.exception.OAuth2AuthenticationEx;
+import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import org.springframework.http.HttpStatus;
 
 import java.util.Map;
