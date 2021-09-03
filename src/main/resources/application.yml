@@ -7,7 +7,7 @@ application:
   security:
     jwt:
       secret: 5867a8374e7c0f6284b177b48faf89e1c79d72d8
-      token-validity-in-seconds: 86400 # 24 hour
+      token-validity-in-seconds: 1 # 24 hour
       token-validity-in-seconds-for-remember-me: 2592000
 
   oauth2:
@@ -48,26 +48,24 @@ spring:
       client:
         registration:
           google:
-            client-id: 251592878751-hde0mp1rhrduev9r6i822osm1r9bi88g.apps.googleusercontent.com
-            client-secret:
-              PcBIXfjuKmR1fRpH6GRCy1V7
+            client-id: 147411542994-dl2a4f22ibpec19irv565t902b7v3nhg.apps.googleusercontent.com
+            client-secret: rToTVL8jmx3xFqHiJr4d_tE6
+            redirect-uri: http://localhost:8080/oauth2/callback/{registrationId}
             scope: #우리가 리소스 오너(구글)에게 요청하는 승낙받아야하는 사용하고자하는 기능을 스콥이라함
               - email
               - profile
 
-          facebook:
-            client-id: 259294199111035
-            client-secret: 26f0055f04462d961d2231e7394edfbf
-            scope:
-              - email
-              - public_profile
+          github:
+            client-id: 72b04d1f8cb329b229cd
+            client-secret: fd0163b71ff11d51e2f0ce5bc834093e6000606f
+            redirect-uri: http://localhost:8080/oauth2/callback/{registrationId}
 
 
           kakao:
             client-id: 07c9a89123e46ae5f72c72e9e0423d02
             client-secret: MVQJF2zabDZwmSrcmiFBihUPmusj2cAu
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/oauth2/callback/kakao
+            redirect-uri: http://localhost:8080/oauth2/callback/{registrationId}
 
             scope:
               - profile
