@@ -26,8 +26,6 @@ public class Users extends CommonDate {
     @Column(nullable = false)
     private String email;
 
-    //private String password;
-
     private String specialty;
 
     private String imgUrl;
@@ -37,6 +35,7 @@ public class Users extends CommonDate {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Provider provider;
+
 
     public List<String> getRoleList(){
         if(this.roles.length() > 0){
