@@ -1,4 +1,4 @@
-package com.make.projects.exception;
+package com.make.projects.exception.authexception;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
 
