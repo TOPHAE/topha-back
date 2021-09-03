@@ -1,7 +1,7 @@
 package com.make.projects.service;
 
 
-import com.make.projects.exception.OAuth2AuthenticationEx;
+import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import com.make.projects.model.domain.Users;
 import com.make.projects.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

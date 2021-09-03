@@ -1,4 +1,4 @@
-package com.make.projects.exception;
+package com.make.projects.exception.authexception;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -10,7 +10,6 @@ import java.io.IOException;
 
 
 public class Http401ErrorEntryPoint implements AuthenticationEntryPoint {
-
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
