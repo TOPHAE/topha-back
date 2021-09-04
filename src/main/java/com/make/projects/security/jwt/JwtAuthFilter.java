@@ -1,7 +1,7 @@
 package com.make.projects.security.jwt;
 
+import com.make.projects.config.auth.CustomUserDetailsService;
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
-import com.make.projects.service.CustomUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +49,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            throw new OAuth2AuthenticationEx("Could not set user authentication in security context", HttpStatus.BAD_REQUEST);
+            throw new OAuth2AuthenticationEx("로그인이 필요한 경로입니다.", HttpStatus.BAD_REQUEST);
         }
 
         filterChain.doFilter(request, response);
