@@ -1,4 +1,4 @@
-package com.make.projects.service;
+package com.make.projects.config.auth;
 
 
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 
 @Service

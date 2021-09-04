@@ -2,11 +2,11 @@ package com.make.projects.model.domain;
 
 import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 
 
 @Builder
+@Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,14 +28,6 @@ public class Comments extends CommonDate {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private Users user;
-
-    public void setCommentUser(Users user){
-        if(this.user != null){
-            this.user.getComments().remove(this);
-        }
-        this.user = user;
-        user.getComments().add(this);
-    }
 
     public void setCommentProject(Project project){
         if(this.project != null){

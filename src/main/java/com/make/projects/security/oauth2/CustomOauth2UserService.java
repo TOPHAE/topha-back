@@ -1,5 +1,6 @@
 package com.make.projects.security.oauth2;
 
+import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.exception.authexception.InternalAuthenticationServiceException;
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import com.make.projects.model.domain.Users;
@@ -7,7 +8,6 @@ import com.make.projects.model.domain.enumType.Provider;
 import com.make.projects.repository.UserRepository;
 import com.make.projects.security.oauth2.user.OAuth2UserInfo;
 import com.make.projects.security.oauth2.user.OAuth2UserInfoFactory;
-import com.make.projects.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -67,7 +67,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         Users userInfo = Users.builder()
                 .provider(Provider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
-                .nickName(oAuth2UserInfo.getName())
+                .nickname(oAuth2UserInfo.getName())
                 .email(oAuth2UserInfo.getEmail())
                 .imgUrl(oAuth2UserInfo.getImageUrl())
                 .roles("ROLE_USER")
@@ -78,7 +78,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private Users updateExistingUser(Users existingUser, OAuth2UserInfo oAuth2UserInfo) {
-        existingUser.setNickName(oAuth2UserInfo.getName());
+        existingUser.setNickname(oAuth2UserInfo.getName());
         existingUser.setImgUrl(oAuth2UserInfo.getImageUrl());
         return userRepository.save(existingUser);
     }

@@ -1,11 +1,14 @@
-package com.make.projects.service;
+package com.make.projects.config.auth;
+
 import com.make.projects.model.domain.Users;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 @Getter
 public class CustomUserDetails implements OAuth2User, UserDetails {
