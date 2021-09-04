@@ -1,6 +1,6 @@
 package com.make.projects.security.jwt;
 import com.make.projects.config.ApplicationProperties;
-import com.make.projects.service.CustomUserDetails;
+import com.make.projects.config.auth.CustomUserDetails;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -53,6 +53,7 @@ public class JwtUtil {
                 .setSubject(customUserDetails.getUsername())
                 .setIssuedAt(new Date())
                 .claim(AUTHORITIES_KEY, authorities)
+                .claim("id", customUserDetails.getUsername())
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .setExpiration(validity)
                 .compact();
