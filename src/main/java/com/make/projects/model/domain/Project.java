@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,10 +24,10 @@ public class Project extends CommonDate {
     private String title;
     private String nickname;
     //@Column(name = "LIKE_COUNT")
-    private Integer likeCount;
+    private Integer likeCount=0;
 
    // @Column(name = "VIEW_COUNT")
-    private Integer viewCount;
+    private Integer viewCount=0;
 
     //@Column(name = "USER_SPEC")
     private String userSpec;
@@ -49,13 +50,15 @@ public class Project extends CommonDate {
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
     private List<Comments> comments = new ArrayList<>();
 
-
-    public void setUserProject(Users user){
-        if(this.user != null) {
-            this.user.getProjects().remove(this);
-        }
-        this.user = user;
-        user.getProjects().add(this);
+    public void setProjectComment(Comments comment){
+        comment.setProject(this);
+        comments.add(comment);
     }
+
+    public int increateViewCount(){
+        this.viewCount = viewCount + 1;
+        return viewCount;
+    }
+
 
 }
