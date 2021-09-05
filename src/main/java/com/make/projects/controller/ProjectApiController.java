@@ -1,17 +1,18 @@
 package com.make.projects.controller;
 
+
 import com.make.projects.model.domain.Project;
-import com.make.projects.model.dto.ResponseDto;
-import com.make.projects.repository.ProjectRepository;
-import com.make.projects.service.CustomUserDetails;
+import com.make.projects.model.dto.ProjectSaveDto;
+import com.make.projects.model.dto.Result;
+import com.make.projects.model.dto.lookup.ProjectQueryDto;
+import com.make.projects.repository.datajpa.ProjectRepository;
+import com.make.projects.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,18 +21,32 @@ import java.util.List;
 public class ProjectApiController {
 
     private final ProjectRepository projectRepository;
+    private final ProjectService projectService;
 
-    @PostMapping("/project/save/{userId}")
-    public ResponseEntity<Project> projectSave(@RequestBody Project project, @PathVariable Long userId){
-        projectRepository.save(project);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+    //프로젝트 게시물 단일조회
+    @GetMapping("/project/selectOne/{projectId}")
+    public Result<ProjectQueryDto> projectSelectOne(@PathVariable Long projectId){
+
+        ProjectQueryDto projectQueryDto = projectService.selectOne(projectId);
+        return new Result<>(projectQueryDto,HttpStatus.OK.value());
     }
 
+
+    //프로젝트 게시물 전체조회
     @GetMapping("/project/selectAll")
-    public ResponseDto<List<Project>> projectSelect(){
-        List<Project> all = projectRepository.findAll();
-        return new ResponseDto<List<Project>>(all,HttpStatus.OK.value());
+    public Result<List<Project>> projectSelectAll(){
+        List<Project> findAllProject = projectRepository.findAll();
+        return new Result<List<Project>>(findAllProject,HttpStatus.OK.value());
     }
+
+    //프로젝트 게시물 등록
+    @PostMapping("/project/save/{userId}")
+    public ResponseEntity<Project> projectSave(@Valid @RequestBody ProjectSaveDto project, @PathVariable Long userId){
+        return null;
+    }
+
+
 
 
 }

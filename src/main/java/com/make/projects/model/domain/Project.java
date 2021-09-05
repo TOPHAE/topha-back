@@ -42,18 +42,21 @@ public class Project extends CommonDate {
     @Column(name = "SPEC")
     private Set<String> spec = new HashSet<>();
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id")
     private Users user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
-    private List<Comments> comments = new ArrayList<>();
+    private final List<Comments> comments = new ArrayList<>();
 
+/*
     public void setProjectComment(Comments comment){
         comment.setProject(this);
         comments.add(comment);
     }
+*/
 
     public int increateViewCount(){
         this.viewCount = viewCount + 1;
