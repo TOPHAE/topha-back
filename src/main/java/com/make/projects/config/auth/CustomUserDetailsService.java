@@ -3,8 +3,8 @@ package com.make.projects.config.auth;
 
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import com.make.projects.model.domain.Users;
-import com.make.projects.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.make.projects.repository.datajpa.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,10 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
