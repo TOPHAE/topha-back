@@ -5,7 +5,7 @@ import com.make.projects.exception.authexception.InternalAuthenticationServiceEx
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import com.make.projects.model.domain.Users;
 import com.make.projects.model.domain.enumType.Provider;
-import com.make.projects.repository.UserRepository;
+import com.make.projects.repository.datajpa.UserRepository;
 import com.make.projects.security.oauth2.user.OAuth2UserInfo;
 import com.make.projects.security.oauth2.user.OAuth2UserInfoFactory;
 import lombok.RequiredArgsConstructor;
