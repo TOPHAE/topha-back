@@ -34,4 +34,7 @@ public class Comments extends CommonDate {
         project.getComments().add(this);
     }
 
+    public Comments(String content) {
+        this.content = content;
+    }
 }
