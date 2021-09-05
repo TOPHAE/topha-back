@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDto<T> {
+public class Result<T> {
     T data;
     Integer httpStatus;
 
