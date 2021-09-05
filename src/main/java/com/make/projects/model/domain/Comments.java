@@ -5,10 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 
 
-@Builder
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Comments extends CommonDate {
@@ -19,12 +17,11 @@ public class Comments extends CommonDate {
 
     private String content;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_Id")
     private Project project;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private Users user;
@@ -36,4 +33,5 @@ public class Comments extends CommonDate {
         this.project = project;
         project.getComments().add(this);
     }
+
 }
