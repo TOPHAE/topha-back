@@ -48,6 +48,15 @@ public class initDb {
 
            em.persist(users);
 
+           Users users1 = Users.builder()
+                   .nickname("김우진")
+                   .provider(Provider.google)
+                   .roles("ROLE_USER")
+                   .email("woojin126@naver.com")
+                   .specialty("백앤드")
+                   .build();
+
+           em.persist(users1);
 
            Set<String> spec = new HashSet<>();
            spec.add("백엔드");
@@ -70,6 +79,20 @@ public class initDb {
 
            em.persist(project);
 
+           Project project1 = Project.builder()
+                   .user(users)
+                   .nickname(users.getNickname())
+                   .spec(spec)
+                   .userSpec("백엔드")
+                   .tech(tech)
+                   .viewCount(10)
+                   .title("우리프로젝트오세요~")
+                   .likeCount(10)
+                   .build();
+
+
+           em.persist(project1);
+
            Comments comment = new Comments("안녕하세연");
            em.persist(comment);
            Comments comment1 = new Comments("보이루");
@@ -77,6 +100,14 @@ public class initDb {
 
            comment.setCommentProject(project);
            comment1.setCommentProject(project);
+
+           Comments comment2 = new Comments("안녕하세연");
+           em.persist(comment);
+           Comments comment3 = new Comments("보이루");
+           em.persist(comment1);
+
+           comment2.setCommentProject(project1);
+           comment3.setCommentProject(project1);
 
         }
 
