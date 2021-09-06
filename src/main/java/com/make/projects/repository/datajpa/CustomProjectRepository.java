@@ -10,4 +10,6 @@ public interface CustomProjectRepository {
 
     Project selectOneProject(Long projectId);
     List<CommentQueryDto> selectOneComment(Long projectId);
+    List<Project> selectAllProject();
+    List<CommentQueryDto> selectAllComment(List<Long> projectId);
 }
