@@ -3,6 +3,7 @@ package com.make.projects.controller;
 import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.model.domain.Users;
 import com.make.projects.model.dto.Result;
+import com.make.projects.model.dto.lookup.ResponseOAuthUser;
 import com.make.projects.repository.datajpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,16 @@ public class UserApiController {
     private final UserRepository userRepository;
 
     @GetMapping("/auth/userInfo")
-    public Users signup(@AuthenticationPrincipal CustomUserDetails userDetails) {
-
-        return null;
+    public Result<ResponseOAuthUser> signup(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Users user = userDetails.getUser();
+        ResponseOAuthUser oauthUserInfo = ResponseOAuthUser.builder()
+                .provider(user.getProvider().name())
+                .nickname(user.getNickname())
+                .email(user.getEmail())
+                .roles(user.getRoles())
+                .userId(user.getUserId())
+                .build();
+        return new Result<>(oauthUserInfo,HttpStatus.OK.value());
     }
     
 
