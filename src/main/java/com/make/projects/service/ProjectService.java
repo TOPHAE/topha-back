@@ -43,6 +43,28 @@ public class ProjectService {
         projectQueryDto.setComments(IdListMap.get(id));
 
         return projectQueryDto;
+    }
+
+    public List<ProjectQueryDto> selectAll(){
+        List<Project> projects = projectRepository.selectAllProject();
+        List<Long> projectIds = projects.stream().map(Project::getId).collect(Collectors.toList());
+        List<ProjectQueryDto> projectQueryDtosCollect = projects.stream().map(s -> {
+            return ProjectQueryDto.builder()
+                    .nickname(s.getNickname())
+                    .spec(s.getSpec())
+                    .view_Count(s.getViewCount())
+                    .like_Count(s.getLikeCount())
+                    .title(s.getTitle())
+                    .project_Id(s.getId())
+                    .user_Spec(s.getUserSpec())
+                    .tech(s.getTech())
+                    .build();
+        }).collect(Collectors.toList());
+        List<CommentQueryDto> commentQueryDtos = projectRepository.selectAllComment(projectIds);
+        Map<Long, List<CommentQueryDto>> idListMap = commentQueryDtos.stream().collect(Collectors.groupingBy(CommentQueryDto::getProject_Id));
+        projectQueryDtosCollect.forEach(p -> p.setComments(idListMap.get(p.getProject_Id())));
+
+        return projectQueryDtosCollect;
 
     }
 }
