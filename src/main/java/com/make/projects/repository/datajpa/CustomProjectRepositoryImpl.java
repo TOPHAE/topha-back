@@ -52,5 +52,25 @@ public class CustomProjectRepositoryImpl implements CustomProjectRepository{
               .fetch();
     }
 
+    @Override
+    public List<Project> selectAllProject() {
+        return queryFactory
+                .select(project)
+                .from(project)
+                .fetch();
+    }
+
+    @Override
+    public List<CommentQueryDto> selectAllComment(List<Long> projectId) {
+        return queryFactory
+                .select(new QCommentQueryDto(
+                        project.id, comments.content , project.nickname
+                ))
+                .from(comments)
+                .leftJoin(comments.project, project)
+                .where(comments.project.id.in(projectId))
+                .fetch();
+    }
+
 
 }
