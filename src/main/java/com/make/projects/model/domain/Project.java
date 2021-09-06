@@ -1,5 +1,6 @@
 package com.make.projects.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import lombok.*;
 
@@ -46,6 +47,7 @@ public class Project extends CommonDate {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id")
     private Users user;
+
 
 
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
