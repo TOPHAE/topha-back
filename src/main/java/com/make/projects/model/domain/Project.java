@@ -42,12 +42,12 @@ public class Project extends CommonDate {
     @Column(name = "SPEC")
     private Set<String> spec = new HashSet<>();
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id")
     private Users user;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
     private final List<Comments> comments = new ArrayList<>();
 

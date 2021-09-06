@@ -44,7 +44,7 @@ public class CustomProjectRepositoryImpl implements CustomProjectRepository{
     public List<CommentQueryDto> selectOneComment(Long projectId) {
  return queryFactory
               .select(new QCommentQueryDto(
-                      project.id , comments.content
+                      project.id , comments.content, project.nickname
               ))
               .from(comments)
               .leftJoin(comments.project, project)

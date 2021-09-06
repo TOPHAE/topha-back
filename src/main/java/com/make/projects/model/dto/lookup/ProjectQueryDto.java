@@ -25,7 +25,7 @@ public class ProjectQueryDto {
 
     @Builder
     @QueryProjection
-    public ProjectQueryDto(Long project_Id, String title, String nickname, String user_Spec, Integer like_Count, Integer view_Count, Set<String> tech, Set<String> spec) {
+    public ProjectQueryDto(Long project_Id, String title, String nickname, String user_Spec, Integer like_Count, Integer view_Count,  Set<String> tech, Set<String> spec) {
         this.project_Id = project_Id;
         this.title = title;
         this.nickname = nickname;

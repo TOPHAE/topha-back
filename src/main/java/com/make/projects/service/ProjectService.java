@@ -1,5 +1,6 @@
 package com.make.projects.service;
 
+import com.make.projects.model.domain.CommonDate;
 import com.make.projects.model.domain.Project;
 import com.make.projects.model.dto.lookup.CommentQueryDto;
 import com.make.projects.model.dto.lookup.ProjectQueryDto;
@@ -40,6 +41,7 @@ public class ProjectService {
                 .nickname(project.getNickname())
                 .build();
         projectQueryDto.setComments(IdListMap.get(id));
+
         return projectQueryDto;
 
     }
