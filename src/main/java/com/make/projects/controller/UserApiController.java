@@ -1,14 +1,18 @@
 package com.make.projects.controller;
 
+import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.model.domain.Users;
 import com.make.projects.model.dto.Result;
 import com.make.projects.repository.datajpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserApiController {
 
     private final UserRepository userRepository;
+
+    @GetMapping("/auth/userInfo")
+    public Users signup(@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        return null;
+    }
+    
 
     @GetMapping("/user/{id}")
     public Result<Users> selectUser(@PathVariable Long id) throws Exception {

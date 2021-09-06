@@ -37,8 +37,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("request1 = " + request);
-        System.out.println("authentication1 = " + authentication);
         String targetUrl = determineTargetUrl(request, response,authentication);
         System.out.println("타겟 = " + targetUrl);
 
@@ -56,7 +54,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
-        System.out.println("타겟2 = " + redirectUri);
+
 
         if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())){
             throw new OAuth2AuthenticationEx("리다이렉트 URI 가없으면 인증 진행이 불가능합니다.", HttpStatus.BAD_REQUEST);
