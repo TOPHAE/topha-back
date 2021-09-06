@@ -35,9 +35,9 @@ public class ProjectApiController {
 
     //프로젝트 게시물 전체조회
     @GetMapping("/project/selectAll")
-    public Result<List<Project>> projectSelectAll(){
-        List<Project> findAllProject = projectRepository.findAll();
-        return new Result<List<Project>>(findAllProject,HttpStatus.OK.value());
+    public Result<List<ProjectQueryDto>> projectSelectAll(){
+        List<ProjectQueryDto> projectQueryDtos = projectService.selectAll();
+        return new Result<>(projectQueryDtos,HttpStatus.OK.value());
     }
 
     //프로젝트 게시물 등록
