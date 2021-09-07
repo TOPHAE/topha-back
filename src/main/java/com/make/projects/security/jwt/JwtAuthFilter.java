@@ -2,6 +2,7 @@ package com.make.projects.security.jwt;
 
 import com.make.projects.config.auth.CustomUserDetailsService;
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,21 +22,14 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private JwtUtil jwtUtil;
-    private CustomUserDetailsService userDetailsService;
-
     @Autowired
-    public JwtAuthFilter(JwtUtil jwtUtil, CustomUserDetailsService userDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
-    }
-
-    public JwtAuthFilter(){
-
-    }
+    private JwtUtil jwtUtil;
+    @Autowired
+    private  CustomUserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         try {
             String jwt = getJwtFromRequest(request);
             System.out.println("토큰확인 = " + jwt);
