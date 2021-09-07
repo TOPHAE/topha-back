@@ -32,6 +32,8 @@ public class UserApiController {
                 .roles(user.getRoles())
                 .userId(user.getUserId())
                 .build();
+
+        System.out.println("응답될까? = " + oauthUserInfo);
         return new Result<>(oauthUserInfo,HttpStatus.OK.value());
     }
     

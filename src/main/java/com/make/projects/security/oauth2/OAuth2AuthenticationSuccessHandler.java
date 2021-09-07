@@ -55,6 +55,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
 
+        System.out.println("리다이렉트 유알엘 = " + redirectUri.get());
+
 
         if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())){
             throw new OAuth2AuthenticationEx("리다이렉트 URI 가없으면 인증 진행이 불가능합니다.", HttpStatus.BAD_REQUEST);
@@ -77,9 +79,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private boolean isAuthorizedRedirectUri(String uri) {
         URI clientRedirectUri = URI.create(uri);
-
-        System.out.println("클라유알엘 = " + clientRedirectUri);
-
 
         //host와 port가 맞는지 다른지 검증 사용자들이 다른 경로를 사용할 수도 있음
         return applicationProperties.getoAuth2().getAuthorizedRedirectUris()

@@ -3,9 +3,12 @@ import com.make.projects.config.ApplicationProperties;
 import com.make.projects.config.auth.CustomUserDetails;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -15,16 +18,14 @@ public class JwtUtil {
 
     private static final String AUTHORITIES_KEY ="roles";
 
-    private String secretKey;
+    @Value("${application.security.jwt.secret}")
+    private final String secretKey;
 
-    private long tokenValidityInMilliseconds;
+    private final long tokenValidityInMilliseconds;
 
-    private long tokenValidityInMillisecondsForRememberMe;
-
-    private ApplicationProperties applicationProperties;
+    private final long tokenValidityInMillisecondsForRememberMe;
 
     public JwtUtil(ApplicationProperties applicationProperties) {
-        this.applicationProperties = applicationProperties;
         this.secretKey = applicationProperties.getSecurity().getJwt().getSecret();
         this.tokenValidityInMilliseconds = 1000 * applicationProperties.getSecurity().getJwt().getTokenValidityInSeconds();
         this.tokenValidityInMillisecondsForRememberMe = 1000 * applicationProperties.getSecurity().getJwt().getTokenValidityInSecondsForRememberMe();
@@ -75,7 +76,9 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String authToken) {
+        System.out.println("authToken = " + authToken);
         try{
+            System.out.println("시크릿키 = " + secretKey);
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e){
