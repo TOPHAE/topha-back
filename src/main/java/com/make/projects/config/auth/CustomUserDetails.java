@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+
 @Getter
 public class CustomUserDetails implements OAuth2User, UserDetails {
 
