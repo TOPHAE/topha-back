@@ -19,7 +19,6 @@ public class Users extends CommonDate {
     @GeneratedValue
     private Long userId;
 
-    @Column(nullable = false)
     private String nickname;
 
     @Column(nullable = false)
