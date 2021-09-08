@@ -1,6 +1,7 @@
 package com.make.projects.service;
 
 import com.make.projects.config.auth.CustomUserDetails;
+import com.make.projects.model.domain.Users;
 import com.make.projects.model.dto.RequestUpdateUser;
 import com.make.projects.model.dto.lookup.ResponseOAuthUser;
 import com.make.projects.repository.datajpa.UserRepository;
@@ -15,17 +16,21 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public ResponseOAuthUser updateUser(RequestUpdateUser requestUpdateUser, CustomUserDetails customUserDetails){
-        customUserDetails.getUser().setSpecialty(requestUpdateUser.getSpecialty());
-        customUserDetails.getUser().setNickname(requestUpdateUser.getNickname());
+
+        Users users = userRepository.findById(customUserDetails.getUser().getUserId()).get();
+        users.setNickname(requestUpdateUser.getNickname());
+        users.setSpecialty(requestUpdateUser.getSpecialty());
+
 
         return ResponseOAuthUser.builder()
-                .userId(customUserDetails.getUser().getUserId())
-                .roles(customUserDetails.getUser().getRoles())
-                .email(customUserDetails.getUser().getEmail())
-                .provider(customUserDetails.getUser().getProvider().name())
-                .nickname(customUserDetails.getUser().getNickname())
-                .userTech(customUserDetails.getUser().getSpecialty())
+                .userId(users.getUserId())
+                .roles(users.getRoles())
+                .email(users.getEmail())
+                .provider(users.getProvider().name())
+                .nickname(users.getNickname())
+                .specialty(users.getSpecialty())
                 .build();
 
     }
