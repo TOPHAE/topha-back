@@ -19,17 +19,19 @@ public class JwtUtil {
     private static final String AUTHORITIES_KEY ="roles";
 
     @Value("${application.security.jwt.secret}")
-    private final String secretKey;
+    private  String secretKey;
 
-    private final long tokenValidityInMilliseconds;
+    @Value("${application.security.jwt.token-validity-in-seconds}")
+    private long tokenValidityInMilliseconds;
 
-    private final long tokenValidityInMillisecondsForRememberMe;
+    @Value("${application.security.jwt.token-validity-in-seconds-for-remember-me}")
+    private long tokenValidityInMillisecondsForRememberMe;
 
-    public JwtUtil(ApplicationProperties applicationProperties) {
+/*    public JwtUtil(ApplicationProperties applicationProperties) {
         this.secretKey = applicationProperties.getSecurity().getJwt().getSecret();
         this.tokenValidityInMilliseconds = 1000 * applicationProperties.getSecurity().getJwt().getTokenValidityInSeconds();
         this.tokenValidityInMillisecondsForRememberMe = 1000 * applicationProperties.getSecurity().getJwt().getTokenValidityInSecondsForRememberMe();
-    }
+    }*/
 
     public String createToken(Authentication authentication) {
         return createToken(authentication,false);
