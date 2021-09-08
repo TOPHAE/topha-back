@@ -55,7 +55,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         user.getProvider() + " account. Please use your " + user.getProvider() +
                         " account to login.", HttpStatus.NOT_FOUND);
             }
-            user = updateExistingUser(user, oAuth2UserInfo);
+            //user = updateExistingUser(user, oAuth2UserInfo);
         } else {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
@@ -77,7 +77,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private Users updateExistingUser(Users existingUser, OAuth2UserInfo oAuth2UserInfo) {
-        existingUser.setNickname(oAuth2UserInfo.getName());
+        //existingUser.setNickname(oAuth2UserInfo.getName());
         existingUser.setImgUrl(oAuth2UserInfo.getImageUrl());
         return userRepository.save(existingUser);
     }
