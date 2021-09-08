@@ -1,7 +1,7 @@
 package com.make.projects.service;
 
 import com.make.projects.config.auth.CustomUserDetails;
-import com.make.projects.model.dto.lookup.RequestOAuthUser;
+import com.make.projects.model.dto.RequestUpdateUser;
 import com.make.projects.model.dto.lookup.ResponseOAuthUser;
 import com.make.projects.repository.datajpa.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +15,17 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public ResponseOAuthUser updateUser(RequestOAuthUser requestOAuthUser, CustomUserDetails customUserDetails){
-        customUserDetails.getUser().setSpecialty(requestOAuthUser.getTech());
-        customUserDetails.getUser().setNickname(requestOAuthUser.getNickname());
+    public ResponseOAuthUser updateUser(RequestUpdateUser requestUpdateUser, CustomUserDetails customUserDetails){
+        customUserDetails.getUser().setSpecialty(requestUpdateUser.getTech());
+        customUserDetails.getUser().setNickname(requestUpdateUser.getNickname());
 
         return ResponseOAuthUser.builder()
                 .userId(customUserDetails.getUser().getUserId())
                 .roles(customUserDetails.getUser().getRoles())
                 .email(customUserDetails.getUser().getEmail())
-                .nickname(customUserDetails.getUser().getNickname())
                 .provider(customUserDetails.getUser().getProvider().name())
+                .nickname(customUserDetails.getUser().getNickname())
+                .userTech(customUserDetails.getUser().getSpecialty())
                 .build();
 
     }
