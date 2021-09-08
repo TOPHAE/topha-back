@@ -8,12 +8,13 @@ import com.make.projects.model.dto.lookup.ResponseOAuthUser;
 import com.make.projects.repository.datajpa.UserRepository;
 import com.make.projects.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -24,6 +25,7 @@ public class UserApiController {
 
     @GetMapping("/auth/userInfo")
     public Result<ResponseOAuthUser> signup(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        log.info("유저 로그인={}", userDetails.getUser());
         Users user = userDetails.getUser();
         ResponseOAuthUser oauthUserInfo = ResponseOAuthUser.builder()
                 .provider(user.getProvider().name())
@@ -33,27 +35,28 @@ public class UserApiController {
                 .userId(user.getUserId())
                 .build();
 
-        System.out.println("응답될까? = " + oauthUserInfo);
-        return new Result<>(oauthUserInfo,HttpStatus.OK.value());
+        return new Result<>(oauthUserInfo, HttpStatus.OK.value());
     }
 
     @GetMapping("/checkNewUser")
-    public Result<Boolean> signupNicknameCheck(@AuthenticationPrincipal CustomUserDetails userDetails){
-        Users user = userDetails.getUser();
-        System.out.println("user = " + user);
-        if(user.getNickname() == null ){
-            return new Result<>(true,HttpStatus.OK.value());
-        }else{
-            return new Result<>(false,HttpStatus.OK.value());
+    public Result<Boolean> signupNicknameCheck(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        log.info("유저 닉네임 확인={}", userDetails.getUser().getNickname());
+
+        if (userDetails.getUser().getNickname() == null) {
+            return new Result<>(true, HttpStatus.OK.value());
+        } else {
+            return new Result<>(false, HttpStatus.OK.value());
         }
     }
 
     @PostMapping("/updateUser")
-    public Result<ResponseOAuthUser> updateUser(@RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails){
-        System.out.println("들어왔나? = " + requestUpdateUser.getNickname());
+    public Result<ResponseOAuthUser> updateUser(@RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        System.out.println("유저디테일 = " + userDetails);
+        log.info("업데이트할 필드값 들어왔는지={}", requestUpdateUser);
         ResponseOAuthUser responseOAuthUser = userService.updateUser(requestUpdateUser, userDetails);
-
-        return new Result<>(responseOAuthUser,HttpStatus.OK.value());
+        System.out.println("업뎃됫나 = " + responseOAuthUser);
+        
+        return new Result<>(responseOAuthUser, HttpStatus.OK.value());
     }
 
 
