@@ -36,6 +36,16 @@ public class UserApiController {
         System.out.println("응답될까? = " + oauthUserInfo);
         return new Result<>(oauthUserInfo,HttpStatus.OK.value());
     }
+   @GetMapping("/checkNewUser")
+    public Result<Boolean> signupNicknameCheck(@AuthenticationPrincipal CustomUserDetails userDetails){
+        Users user = userDetails.getUser();
+        if(user.getNickname() == null){
+            return new Result<>(true,HttpStatus.OK.value());
+        }else{
+            return new Result<>(false,HttpStatus.OK.value());
+        }
+
+    }
     
 
     @GetMapping("/user/{id}")
@@ -43,5 +53,6 @@ public class UserApiController {
         Users users = userRepository.findById(id).orElseThrow(Exception::new);
         return new Result<>(users, HttpStatus.OK.value());
     }
+
 
 }
