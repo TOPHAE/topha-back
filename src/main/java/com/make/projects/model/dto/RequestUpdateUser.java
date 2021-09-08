@@ -15,6 +15,6 @@ public class RequestUpdateUser {
 
     private String nickname;
 
-    private String tech;
+    private String specialty;
 
 }
