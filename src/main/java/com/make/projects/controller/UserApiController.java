@@ -40,7 +40,8 @@ public class UserApiController {
     @GetMapping("/checkNewUser")
     public Result<Boolean> signupNicknameCheck(@AuthenticationPrincipal CustomUserDetails userDetails){
         Users user = userDetails.getUser();
-        if(user.getNickname() == null && user.getNickname().isEmpty()){
+        System.out.println("user = " + user);
+        if(user.getNickname() == null ){
             return new Result<>(true,HttpStatus.OK.value());
         }else{
             return new Result<>(false,HttpStatus.OK.value());
@@ -48,7 +49,8 @@ public class UserApiController {
     }
 
     @PostMapping("/updateUser")
-    public Result<ResponseOAuthUser> updateUser(@Valid @RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails){
+    public Result<ResponseOAuthUser> updateUser(@RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails){
+        System.out.println("들어왔나? = " + requestUpdateUser.getNickname());
         ResponseOAuthUser responseOAuthUser = userService.updateUser(requestUpdateUser, userDetails);
 
         return new Result<>(responseOAuthUser,HttpStatus.OK.value());
