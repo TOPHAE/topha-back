@@ -2,18 +2,15 @@ package com.make.projects.controller;
 
 import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.model.domain.Users;
+import com.make.projects.model.dto.lookup.RequestOAuthUser;
 import com.make.projects.model.dto.Result;
 import com.make.projects.model.dto.lookup.ResponseOAuthUser;
 import com.make.projects.repository.datajpa.UserRepository;
+import com.make.projects.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserApiController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/auth/userInfo")
     public Result<ResponseOAuthUser> signup(@AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -36,16 +34,25 @@ public class UserApiController {
         System.out.println("응답될까? = " + oauthUserInfo);
         return new Result<>(oauthUserInfo,HttpStatus.OK.value());
     }
-   @GetMapping("/checkNewUser")
+
+    @GetMapping("/checkNewUser")
     public Result<Boolean> signupNicknameCheck(@AuthenticationPrincipal CustomUserDetails userDetails){
         Users user = userDetails.getUser();
-        if(user.getNickname() == null){
+        if(user.getNickname() == null && user.getNickname().isEmpty()){
             return new Result<>(true,HttpStatus.OK.value());
         }else{
             return new Result<>(false,HttpStatus.OK.value());
         }
-
     }
+
+    @PostMapping("/updateUser")
+    public Result<ResponseOAuthUser> updateUser(@RequestBody RequestOAuthUser requestOAuthUser, @AuthenticationPrincipal CustomUserDetails userDetails){
+        ResponseOAuthUser responseOAuthUser = userService.updateUser(requestOAuthUser, userDetails);
+
+        return new Result<>(responseOAuthUser,HttpStatus.OK.value());
+    }
+
+
     
 
     @GetMapping("/user/{id}")
