@@ -16,7 +16,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public ResponseOAuthUser updateUser(RequestUpdateUser requestUpdateUser, CustomUserDetails customUserDetails){
-        customUserDetails.getUser().setSpecialty(requestUpdateUser.getTech());
+        customUserDetails.getUser().setSpecialty(requestUpdateUser.getSpecialty());
         customUserDetails.getUser().setNickname(requestUpdateUser.getNickname());
 
         return ResponseOAuthUser.builder()
