@@ -58,7 +58,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         System.out.println("리다이렉트 유알엘 = " + redirectUri.get());
 
 
-        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())){
+        if(!isAuthorizedRedirectUri(redirectUri.get())){
             throw new OAuth2AuthenticationEx("리다이렉트 URI 가없으면 인증 진행이 불가능합니다.", HttpStatus.BAD_REQUEST);
         }
 
