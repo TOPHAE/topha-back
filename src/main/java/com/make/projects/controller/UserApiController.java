@@ -2,7 +2,7 @@ package com.make.projects.controller;
 
 import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.model.domain.Users;
-import com.make.projects.model.dto.lookup.RequestOAuthUser;
+import com.make.projects.model.dto.RequestUpdateUser;
 import com.make.projects.model.dto.Result;
 import com.make.projects.model.dto.lookup.ResponseOAuthUser;
 import com.make.projects.repository.datajpa.UserRepository;
@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,8 +48,8 @@ public class UserApiController {
     }
 
     @PostMapping("/updateUser")
-    public Result<ResponseOAuthUser> updateUser(@RequestBody RequestOAuthUser requestOAuthUser, @AuthenticationPrincipal CustomUserDetails userDetails){
-        ResponseOAuthUser responseOAuthUser = userService.updateUser(requestOAuthUser, userDetails);
+    public Result<ResponseOAuthUser> updateUser(@Valid @RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails){
+        ResponseOAuthUser responseOAuthUser = userService.updateUser(requestUpdateUser, userDetails);
 
         return new Result<>(responseOAuthUser,HttpStatus.OK.value());
     }
