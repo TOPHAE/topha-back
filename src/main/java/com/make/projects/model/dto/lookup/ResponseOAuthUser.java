@@ -13,5 +13,7 @@ public class ResponseOAuthUser {
     private String email;
     private String roles;
     private String provider;
-    private String userTech;
+    private String specialty;
+
+
 }
