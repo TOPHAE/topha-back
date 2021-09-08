@@ -7,11 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 
 
+@ToString
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Entity
 public class Users extends CommonDate {
 
