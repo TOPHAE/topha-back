@@ -51,10 +51,8 @@ public class UserApiController {
 
     @PostMapping("/updateUser")
     public Result<ResponseOAuthUser> updateUser(@RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        System.out.println("유저디테일 = " + userDetails);
-        log.info("업데이트할 필드값 들어왔는지={}", requestUpdateUser);
+        log.info("업데이트 필드값={}", requestUpdateUser);
         ResponseOAuthUser responseOAuthUser = userService.updateUser(requestUpdateUser, userDetails);
-        System.out.println("업뎃됫나 = " + responseOAuthUser);
         
         return new Result<>(responseOAuthUser, HttpStatus.OK.value());
     }
