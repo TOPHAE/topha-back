@@ -1,9 +1,4 @@
 application:
-  datasource:
-    cachePrepStmts: true
-    prepStmtCacheSize: 250
-    prepStmtCacheSqlLimit: 2048
-    useServerPrepStmts: true
   security:
     jwt:
       secret: 5867a8374e7c0f6284b177b48faf89e1c79d72d8
