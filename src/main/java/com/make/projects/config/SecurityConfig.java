@@ -68,9 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers(HttpMethod.GET,"/api/user/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/project/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/comment/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/project/**").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.POST,"/api/comment/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')")
