@@ -38,7 +38,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(request, response,authentication);
-        System.out.println("타겟 = " + targetUrl);
+        log.info("리다이렉트 타겟={}",targetUrl);
 
         if(response.isCommitted()){
             log.debug("응답 완료되어 리다이렉트 할수 없는 Url" + targetUrl);
@@ -54,8 +54,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
-
-        System.out.println("리다이렉트 유알엘 = " + redirectUri.get());
+        log.info("리다이렉트 URL={}",redirectUri.get());
 
 
         if(!isAuthorizedRedirectUri(redirectUri.get())){
