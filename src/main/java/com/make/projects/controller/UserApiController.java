@@ -52,19 +52,10 @@ public class UserApiController {
     @PostMapping("/updateUser")
     public Result<ResponseOAuthUser> updateUser(@RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails) {
         log.info("업데이트 필드값={}", requestUpdateUser);
+        System.out.println("업데이트유저진입");
         ResponseOAuthUser responseOAuthUser = userService.updateUser(requestUpdateUser, userDetails);
         
         return new Result<>(responseOAuthUser, HttpStatus.OK.value());
     }
-
-
-    
-
-    @GetMapping("/user/{id}")
-    public Result<Users> selectUser(@PathVariable Long id) throws Exception {
-        Users users = userRepository.findById(id).orElseThrow(Exception::new);
-        return new Result<>(users, HttpStatus.OK.value());
-    }
-
 
 }
