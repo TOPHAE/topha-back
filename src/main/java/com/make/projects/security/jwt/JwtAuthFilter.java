@@ -1,9 +1,13 @@
 package com.make.projects.security.jwt;
 
 import com.make.projects.config.auth.CustomUserDetailsService;
+<<<<<<< HEAD
 import com.make.projects.exception.authexception.JwtTokenException;
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import lombok.RequiredArgsConstructor;
+=======
+import com.make.projects.exception.jwtexception.JwtTokenException;
+>>>>>>> refreshToken
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +30,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
-    private  CustomUserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -43,9 +47,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (JwtTokenException ex) {
+<<<<<<< HEAD
             throw new JwtTokenException(ex.getMessage(),ex.getCause(), HttpStatus.BAD_REQUEST);
+=======
+            throw new JwtTokenException(ex.getMessage(), ex.getCause(), HttpStatus.BAD_REQUEST);
+>>>>>>> refreshToken
         }
-
         filterChain.doFilter(request, response);
     }
 

@@ -6,11 +6,19 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Result<T> {
     T data;
     Integer httpStatus;
+    String errorMessage;
 
+    public Result(T data, Integer httpStatus) {
+        this.data = data;
+        this.httpStatus = httpStatus;
+    }
 
+    public Result( Integer httpStatus, String errorMessage) {
+        this.httpStatus = httpStatus;
+        this.errorMessage = errorMessage;
+    }
 
 }

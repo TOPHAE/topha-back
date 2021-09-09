@@ -1,6 +1,5 @@
 package com.make.projects.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
 import lombok.*;
 
@@ -25,6 +24,7 @@ public class Project extends CommonDate {
     private String title;
     private String nickname;
     //@Column(name = "LIKE_COUNT")
+
     private Integer likeCount=0;
 
    // @Column(name = "VIEW_COUNT")
@@ -49,7 +49,6 @@ public class Project extends CommonDate {
     private Users user;
 
 
-
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
     private final List<Comments> comments = new ArrayList<>();
 
@@ -59,6 +58,14 @@ public class Project extends CommonDate {
         comments.add(comment);
     }
 */
+
+    public void setProjectUser(Users user){
+     /*   if(user != null){
+            this.user.getProjects().remove(this);
+        }*/
+        this.user = user;
+        user.getProjects().add(this);
+    }
 
     public int increateViewCount(){
         this.viewCount = viewCount + 1;

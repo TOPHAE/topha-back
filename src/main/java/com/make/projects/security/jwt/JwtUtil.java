@@ -1,7 +1,11 @@
 package com.make.projects.security.jwt;
 import com.make.projects.config.auth.CustomUserDetails;
+<<<<<<< HEAD
 import com.make.projects.exception.authexception.JwtTokenException;
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
+=======
+import com.make.projects.exception.jwtexception.JwtTokenException;
+>>>>>>> refreshToken
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,10 +20,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwtUtil {
 
-    private static final String AUTHORITIES_KEY ="roles";
+    private static final String AUTHORITIES_KEY = "roles";
 
     @Value("${application.security.jwt.secret}")
-    private  String secretKey;
+    private String secretKey;
 
     @Value("${application.security.jwt.token-validity-in-seconds}")
     private long tokenValidityInMilliseconds;
@@ -34,7 +38,7 @@ public class JwtUtil {
     }*/
 
     public String createToken(Authentication authentication) {
-        return createToken(authentication,false);
+        return createToken(authentication, false);
     }
 
     public String createToken(Authentication authentication, Boolean rememberMe) {
@@ -64,11 +68,12 @@ public class JwtUtil {
     }
 
     /**
-     *  비밀키를 이용해 현재 복호화 하려는 jwt가 유효한지, 위변조되지 않았는지 판단
-     *  이 비밀키는 서버에만 존재해야 하며 유출되어선 X
+     * 비밀키를 이용해 현재 복호화 하려는 jwt가 유효한지, 위변조되지 않았는지 판단
+     * 이 비밀키는 서버에만 존재해야 하며 유출되어선 X
      */
 
-    public String getUserIdFromToken(String token){
+    public String getUserIdFromToken(String token) {
+
         Claims claims = Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
@@ -78,6 +83,7 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String authToken) {
+<<<<<<< HEAD
 
         try{
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
@@ -85,6 +91,25 @@ public class JwtUtil {
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | ExpiredJwtException | IllegalArgumentException e){
             throw new JwtTokenException(e.getMessage() ,e.getCause(), HttpStatus.FORBIDDEN);
         } catch (Exception e){
+=======
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
+            return true;
+        } catch (SignatureException e) {
+            log.info("유효하지 않은 서명");
+            throw new JwtTokenException(e.getMessage(), e.getCause(), HttpStatus.FORBIDDEN);
+        } catch (MalformedJwtException e) {
+            log.info("토큰 구성 오류");
+            throw new JwtTokenException(e.getMessage(), e.getCause(), HttpStatus.FORBIDDEN);
+        } catch (ExpiredJwtException e) {
+            log.info("만료 기간 초과");
+            throw new JwtTokenException(e.getMessage(), e.getCause(), HttpStatus.FORBIDDEN);
+        } catch (UnsupportedJwtException e) {
+            log.info("기존의 형식과 다릅니다");
+            throw new JwtTokenException(e.getMessage(), e.getCause(), HttpStatus.FORBIDDEN);
+        } catch (IllegalArgumentException e) {
+            log.info("부적합한 인자");
+>>>>>>> refreshToken
             throw new JwtTokenException(e.getMessage(), e.getCause(), HttpStatus.FORBIDDEN);
         }
 
