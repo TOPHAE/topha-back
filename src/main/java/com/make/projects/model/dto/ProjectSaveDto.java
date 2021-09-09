@@ -14,13 +14,8 @@ import java.util.Set;
 public class ProjectSaveDto {
 
     private String title;
-    private String nickname;
-    private Integer likeCount;
-    private Integer viewCount;
-    private String userSpec;
     private Set<String> tech;
     private Set<String> spec;
-    private Long userId;
     
 
 }

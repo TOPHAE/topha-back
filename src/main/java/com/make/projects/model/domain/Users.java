@@ -35,11 +35,11 @@ public class Users extends CommonDate {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
-/*    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Comments> comments = new ArrayList<>();*/
+    private List<Comments> comments = new ArrayList<>();
 
 
     public List<String> getRoleList(){

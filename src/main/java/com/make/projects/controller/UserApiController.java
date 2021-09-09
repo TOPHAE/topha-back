@@ -2,9 +2,9 @@ package com.make.projects.controller;
 
 import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.model.domain.Users;
-import com.make.projects.model.dto.RequestUpdateUser;
+import com.make.projects.model.dto.RequestSaveUser;
 import com.make.projects.model.dto.Result;
-import com.make.projects.model.dto.lookup.ResponseOAuthUser;
+import com.make.projects.model.dto.lookup.ResponseUserDto;
 import com.make.projects.repository.datajpa.UserRepository;
 import com.make.projects.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +24,10 @@ public class UserApiController {
     private final UserService userService;
 
     @GetMapping("/auth/userInfo")
-    public Result<ResponseOAuthUser> signup(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public Result<ResponseUserDto> signup(@AuthenticationPrincipal CustomUserDetails userDetails) {
         log.info("유저 로그인={}", userDetails.getUser());
         Users user = userDetails.getUser();
-        ResponseOAuthUser oauthUserInfo = ResponseOAuthUser.builder()
+        ResponseUserDto oauthUserInfo = ResponseUserDto.builder()
                 .provider(user.getProvider().name())
                 .nickname(user.getNickname())
                 .email(user.getEmail())
@@ -43,19 +43,20 @@ public class UserApiController {
         log.info("유저 닉네임 확인={}", userDetails.getUser().getNickname());
 
         if (userDetails.getUser().getNickname() == null) {
-            return new Result<>(true, HttpStatus.OK.value());
+            return new Result<>(true, HttpStatus.NOT_FOUND.value());
         } else {
             return new Result<>(false, HttpStatus.OK.value());
         }
+
     }
 
     @PostMapping("/updateUser")
-    public Result<ResponseOAuthUser> updateUser(@RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        log.info("업데이트 필드값={}", requestUpdateUser);
+    public Result<ResponseUserDto> updateUser(@RequestBody RequestSaveUser requestSaveUser, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        log.info("업데이트 필드값={}", requestSaveUser);
         System.out.println("업데이트유저진입");
-        ResponseOAuthUser responseOAuthUser = userService.updateUser(requestUpdateUser, userDetails);
+        ResponseUserDto responseUserDto = userService.updateUser(requestSaveUser, userDetails);
         
-        return new Result<>(responseOAuthUser, HttpStatus.OK.value());
+        return new Result<>(responseUserDto, HttpStatus.OK.value());
     }
 
 }

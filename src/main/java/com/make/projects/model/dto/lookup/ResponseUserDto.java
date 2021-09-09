@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class ResponseOAuthUser {
+public class ResponseUserDto {
     private Long userId;
     private String nickname;
     private String email;
