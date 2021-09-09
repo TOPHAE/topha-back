@@ -14,9 +14,9 @@ import java.util.Set;
 public class ProjectSaveDto {
 
     private String title;
-    private String content;
     private Set<String> tech;
     private Set<String> spec;
+    private String content;
     
 
 }

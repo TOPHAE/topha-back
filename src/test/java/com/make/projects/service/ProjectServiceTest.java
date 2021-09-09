@@ -45,6 +45,7 @@ class ProjectServiceTest {
 
         Project project = Project.builder()
                 .spec(set)
+                .content("Sefsefsefsef")
                 .tech(set)
                 .title("하이")
                 .nickname(users.getNickname())
