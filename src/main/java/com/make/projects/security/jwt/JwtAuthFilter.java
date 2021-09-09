@@ -1,6 +1,7 @@
 package com.make.projects.security.jwt;
 
 import com.make.projects.config.auth.CustomUserDetailsService;
+import com.make.projects.exception.authexception.JwtTokenException;
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             String jwt = getJwtFromRequest(request);
-            System.out.println("토큰확인 = " + jwt);
             if (StringUtils.hasText(jwt) && jwtUtil.validateToken(jwt)) {
                 String userId = jwtUtil.getUserIdFromToken(jwt);
 
@@ -42,8 +42,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (Exception ex) {
-            throw new OAuth2AuthenticationEx("로그인이 필요한 경로입니다.", HttpStatus.BAD_REQUEST);
+        } catch (JwtTokenException ex) {
+            throw new JwtTokenException(ex.getMessage(),ex.getCause(), HttpStatus.BAD_REQUEST);
         }
 
         filterChain.doFilter(request, response);
