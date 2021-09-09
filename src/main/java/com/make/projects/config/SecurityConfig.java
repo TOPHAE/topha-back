@@ -74,9 +74,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
             .and()
                 .oauth2Login()
-                .authorizationEndpoint()
+                .authorizationEndpoint()//인가에 대한 요청을 서비스할 때 사용한다. 기본 URL은 /oauth/authorize
                 .baseUri("/oauth2/authorize")
-                .authorizationRequestRepository(cookieAuthorizationRequestRepository())
+                .authorizationRequestRepository(cookieAuthorizationRequestRepository()) // 인가 요청을 시작한 시점부터 인가 요청을 받는 시점까지 (콜백) OAuth2AuthorizationRequest를 유지해준다.
             .and()
                 .redirectionEndpoint()
                 .baseUri("/oauth2/callback/*")
