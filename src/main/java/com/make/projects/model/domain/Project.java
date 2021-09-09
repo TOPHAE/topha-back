@@ -24,14 +24,17 @@ public class Project extends CommonDate {
     private String title;
     private String nickname;
     //@Column(name = "LIKE_COUNT")
+    private String content;
 
-    private Integer likeCount=0;
+    private int likeCount=0;
 
    // @Column(name = "VIEW_COUNT")
-    private Integer viewCount=0;
+    private int viewCount=0;
 
     //@Column(name = "USER_SPEC")
     private String userSpec;
+
+
 
     @ElementCollection //값 타입 컬렉션입니다
     @CollectionTable(name ="TECH",joinColumns = @JoinColumn(name = "projectId")) //컬렉션 테이블 생성,외래키로지정 만들어질 테이블에

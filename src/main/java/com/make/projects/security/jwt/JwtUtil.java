@@ -1,11 +1,7 @@
 package com.make.projects.security.jwt;
 import com.make.projects.config.auth.CustomUserDetails;
-<<<<<<< HEAD
+
 import com.make.projects.exception.authexception.JwtTokenException;
-import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
-=======
-import com.make.projects.exception.jwtexception.JwtTokenException;
->>>>>>> refreshToken
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -83,15 +79,6 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String authToken) {
-<<<<<<< HEAD
-
-        try{
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
-            return true;
-        } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | ExpiredJwtException | IllegalArgumentException e){
-            throw new JwtTokenException(e.getMessage() ,e.getCause(), HttpStatus.FORBIDDEN);
-        } catch (Exception e){
-=======
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
             return true;
@@ -109,7 +96,6 @@ public class JwtUtil {
             throw new JwtTokenException(e.getMessage(), e.getCause(), HttpStatus.FORBIDDEN);
         } catch (IllegalArgumentException e) {
             log.info("부적합한 인자");
->>>>>>> refreshToken
             throw new JwtTokenException(e.getMessage(), e.getCause(), HttpStatus.FORBIDDEN);
         }
 

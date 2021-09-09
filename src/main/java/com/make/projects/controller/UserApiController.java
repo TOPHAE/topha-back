@@ -51,16 +51,8 @@ public class UserApiController {
     }
 
     @PostMapping("/updateUser")
-<<<<<<< HEAD
-    public Result<ResponseOAuthUser> updateUser(@RequestBody RequestUpdateUser requestUpdateUser, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        log.info("업데이트 필드값={}", requestUpdateUser);
-        ResponseOAuthUser responseOAuthUser = userService.updateUser(requestUpdateUser, userDetails);
-=======
     public Result<ResponseUserDto> updateUser(@RequestBody RequestSaveUser requestSaveUser, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        log.info("업데이트 필드값={}", requestSaveUser);
-        System.out.println("업데이트유저진입");
         ResponseUserDto responseUserDto = userService.updateUser(requestSaveUser, userDetails);
->>>>>>> refreshToken
         
         return new Result<>(responseUserDto, HttpStatus.OK.value());
     }

@@ -33,10 +33,11 @@ public class ProjectService {
         Project project = Project.builder()
                 .viewCount(0)
                 .likeCount(0)
-                .userSpec(customUserDetails.getUser().getSpecialty())
+                .content(projectSaveDto.getContent())
                 .tech(projectSaveDto.getTech())
                 .title(projectSaveDto.getTitle())
                 .spec(projectSaveDto.getSpec())
+                .userSpec(customUserDetails.getUser().getSpecialty())
                 .nickname(customUserDetails.getUser().getNickname())
                 .build();
         project.setProjectUser(customUserDetails.getUser());
