@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@ToString
 @Getter
 @Setter
 @Builder
@@ -35,10 +34,10 @@ public class Users extends CommonDate {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL)
     private List<Project> projects = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Comments> comments = new ArrayList<>();
 
 
