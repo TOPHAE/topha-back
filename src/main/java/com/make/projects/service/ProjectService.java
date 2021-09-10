@@ -1,10 +1,7 @@
 package com.make.projects.service;
 
 import com.make.projects.config.auth.CustomUserDetails;
-import com.make.projects.exception.NotFoundException;
-import com.make.projects.model.domain.CommonDate;
 import com.make.projects.model.domain.Project;
-import com.make.projects.model.domain.Users;
 import com.make.projects.model.dto.ProjectSaveDto;
 import com.make.projects.model.dto.lookup.CommentQueryDto;
 import com.make.projects.model.dto.lookup.ProjectQueryDto;
@@ -14,7 +11,6 @@ import com.make.projects.repository.datajpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,7 +25,7 @@ public class ProjectService {
     private final UserRepository userRepository;
 
     @Transactional
-    public ResponseProjectDto saveProject(ProjectSaveDto projectSaveDto, CustomUserDetails customUserDetails){
+    public ResponseProjectDto saveProject(ProjectSaveDto projectSaveDto, CustomUserDetails customUserDetails) {
         Project project = Project.builder()
                 .viewCount(0)
                 .likeCount(0)
