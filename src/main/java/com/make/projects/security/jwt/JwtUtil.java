@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
+
+import java.sql.Ref;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -27,11 +29,29 @@ public class JwtUtil {
     @Value("${application.security.jwt.token-validity-in-seconds-for-remember-me}")
     private long tokenValidityInMillisecondsForRememberMe;
 
+    @Value("${application.security.jwt.refresh-token-validity-in-seconds}")
+    private long refreshValidityInMilliseconds;
 /*    public JwtUtil(ApplicationProperties applicationProperties) {
         this.secretKey = applicationProperties.getSecurity().getJwt().getSecret();
         this.tokenValidityInMilliseconds = 1000 * applicationProperties.getSecurity().getJwt().getTokenValidityInSeconds();
         this.tokenValidityInMillisecondsForRememberMe = 1000 * applicationProperties.getSecurity().getJwt().getTokenValidityInSecondsForRememberMe();
     }*/
+public String createRefreshToken(Authentication authentication) {
+
+    long now = (new Date()).getTime();
+     Date RefreshValidity = new Date(now + this.refreshValidityInMilliseconds);
+
+    CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+
+    return Jwts.builder()
+            .setSubject(customUserDetails.getUsername())
+            .setIssuedAt(new Date())
+            .claim("id", customUserDetails.getUsername())
+            .signWith(SignatureAlgorithm.HS512, secretKey)
+            .setExpiration(RefreshValidity)
+            .compact();
+
+}
 
     public String createToken(Authentication authentication) {
         return createToken(authentication, false);
