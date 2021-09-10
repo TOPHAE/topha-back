@@ -1,14 +1,18 @@
 package com.make.projects.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Configuration
-@ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@Component
+//@ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@ConfigurationProperties("application")
 public class ApplicationProperties {
 
     private final Security security = new Security();
@@ -25,37 +29,19 @@ public class ApplicationProperties {
             return jwt;
         }
 
+        @Getter
+        @Setter
         public static class Jwt {
 
             private String secret;
 
-            private long tokenValidityInSeconds = 1800;
+            private long tokenValidityInSeconds = 18000;
 
             private long tokenValidityInSecondsForRememberMe = 2592000;
 
-            public String getSecret() {
-                return secret;
-            }
+            private long refreshValidityInMilliseconds = 60000;
 
-            public void setSecret(String secret) {
-                this.secret = secret;
-            }
 
-            public long getTokenValidityInSeconds() {
-                return tokenValidityInSeconds;
-            }
-
-            public void setTokenValidityInSeconds(long tokenValidityInSeconds) {
-                this.tokenValidityInSeconds = tokenValidityInSeconds;
-            }
-
-            public long getTokenValidityInSecondsForRememberMe() {
-                return tokenValidityInSecondsForRememberMe;
-            }
-
-            public void setTokenValidityInSecondsForRememberMe(long tokenValidityInSecondsForRememberMe) {
-                this.tokenValidityInSecondsForRememberMe = tokenValidityInSecondsForRememberMe;
-            }
         }
     }
 
