@@ -1,8 +1,9 @@
 # 내가 사용하고싶은 언어들과 만들어보고싶은 프로젝트를 같이하기위한 동료 모집하기
 #### 목표
-프론트 실행은
-npm i
-npm start
+- 프론트 코드 https://github.com/woojin126/topha-front
+- 프론트 실행은
+- npm i
+- npm start
 
 ### 기본 사양
 - spring boot 2.4.5
