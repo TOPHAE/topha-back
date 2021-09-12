@@ -28,11 +28,13 @@ public class UserApiController {
         log.info("유저 로그인={}", userDetails.getUser());
         Users user = userDetails.getUser();
         ResponseUserDto oauthUserInfo = ResponseUserDto.builder()
+                .specialty(user.getSpecialty())
                 .provider(user.getProvider().name())
                 .nickname(user.getNickname())
                 .email(user.getEmail())
                 .roles(user.getRoles())
                 .userId(user.getUserId())
+                .imgUrl(user.getImgUrl())
                 .build();
 
         return new Result<>(oauthUserInfo, HttpStatus.OK.value());
