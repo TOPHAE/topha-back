@@ -7,8 +7,8 @@ import com.make.projects.model.dto.lookup.CommentQueryDto;
 import com.make.projects.model.dto.lookup.ProjectQueryDto;
 import com.make.projects.model.dto.lookup.ResponseProjectDto;
 import com.make.projects.repository.datajpa.ProjectRepository;
-import com.make.projects.repository.datajpa.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -18,25 +18,26 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Transactional(readOnly = true)
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
-
     @Transactional
     public ResponseProjectDto saveProject(ProjectSaveDto projectSaveDto, CustomUserDetails customUserDetails) {
-        Project project = Project.builder()
+
+        Project projects = Project.builder()
                 .viewCount(0)
                 .likeCount(0)
                 .content(projectSaveDto.getContent())
-                .tech(projectSaveDto.getTech())
                 .title(projectSaveDto.getTitle())
-                .spec(projectSaveDto.getSpec())
+                .tech(projectSaveDto.getTech().stream().map(ProjectSaveDto.techs::getKey).collect(Collectors.toSet()))
+                .spec(projectSaveDto.getSpec().stream().map(ProjectSaveDto.specs::getKey).collect(Collectors.toSet()))
                 .userSpec(customUserDetails.getUser().getSpecialty())
                 .nickname(customUserDetails.getUser().getNickname())
+                .user(customUserDetails.getUser())
                 .build();
-        project.setProjectUser(customUserDetails.getUser());
+        Project project = projectRepository.save(projects);
 
         return ResponseProjectDto.builder()
                 .userId(project.getUser().getUserId())
