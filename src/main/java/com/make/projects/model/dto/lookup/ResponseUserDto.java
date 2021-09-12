@@ -14,6 +14,7 @@ public class ResponseUserDto {
     private String roles;
     private String provider;
     private String specialty;
+    private String imgUrl;
 
 
 }
