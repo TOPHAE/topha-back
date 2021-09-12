@@ -2,28 +2,26 @@ package com.make.projects.controller;
 
 
 import com.make.projects.config.auth.CustomUserDetails;
-import com.make.projects.model.domain.Project;
 import com.make.projects.model.dto.ProjectSaveDto;
 import com.make.projects.model.dto.Result;
 import com.make.projects.model.dto.lookup.ProjectQueryDto;
 import com.make.projects.model.dto.lookup.ResponseProjectDto;
-import com.make.projects.repository.datajpa.ProjectRepository;
 import com.make.projects.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
+
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ProjectApiController {
 
-    private final ProjectRepository projectRepository;
     private final ProjectService projectService;
 
 
@@ -45,7 +43,8 @@ public class ProjectApiController {
 
     //프로젝트 게시물 등록
     @PostMapping("/project/save")
-    public Result<ResponseProjectDto> projectSave(@Valid @RequestBody ProjectSaveDto project, @AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public Result<ResponseProjectDto> projectSave(@Valid @RequestBody ProjectSaveDto project, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        log.info("ProjectSaveDto={}",project);
         ResponseProjectDto responseProjectDto = projectService.saveProject(project, customUserDetails);
         return new Result<>(responseProjectDto, HttpStatus.OK.value());
 
