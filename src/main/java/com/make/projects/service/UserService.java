@@ -35,4 +35,17 @@ public class UserService {
 
     }
 
+    public ResponseUserDto saveUser(Users user) {
+
+        return ResponseUserDto.builder()
+                .specialty(user.getSpecialty())
+                .provider(user.getProvider().name())
+                .nickname(user.getNickname())
+                .email(user.getEmail())
+                .roles(user.getRoles())
+                .userId(user.getUserId())
+                .imgUrl(user.getImgUrl())
+                .build();
+
+    }
 }
