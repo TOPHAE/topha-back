@@ -9,10 +9,13 @@ import com.make.projects.model.dto.lookup.ResponseProjectDto;
 import com.make.projects.repository.datajpa.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -23,6 +26,7 @@ import java.util.stream.Collectors;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+
     @Transactional
     public ResponseProjectDto saveProject(ProjectSaveDto projectSaveDto, CustomUserDetails customUserDetails) {
 
@@ -37,7 +41,9 @@ public class ProjectService {
                 .nickname(customUserDetails.getUser().getNickname())
                 .user(customUserDetails.getUser())
                 .build();
+
         Project project = projectRepository.save(projects);
+
 
         return ResponseProjectDto.builder()
                 .userId(project.getUser().getUserId())
@@ -53,7 +59,7 @@ public class ProjectService {
     @Transactional
     public ProjectQueryDto selectOne(Long projectId) {
         Project project = projectRepository.selectOneProject(projectId);
-
+        project.increateViewCount();
         Long id = project.getId();
         List<CommentQueryDto> comments = projectRepository.selectOneComment(id);
         Map<Long, List<CommentQueryDto>> IdListMap = comments.stream().collect(Collectors.groupingBy(CommentQueryDto::getProject_Id));
@@ -73,8 +79,8 @@ public class ProjectService {
         return projectQueryDto;
     }
 
-    public List<ProjectQueryDto> selectAll(){
-        List<Project> projects = projectRepository.selectAllProject();
+    public List<ProjectQueryDto> selectAll(Pageable pageable){
+        Page<Project> projects = projectRepository.selectAllProject(pageable);
         List<Long> projectIds = projects.stream().map(Project::getId).collect(Collectors.toList());
         List<ProjectQueryDto> projectQueryDtosCollect = projects.stream().map(s -> {
             return ProjectQueryDto.builder()
@@ -88,11 +94,11 @@ public class ProjectService {
                     .tech(s.getTech())
                     .build();
         }).collect(Collectors.toList());
+
         List<CommentQueryDto> commentQueryDtos = projectRepository.selectAllComment(projectIds);
         Map<Long, List<CommentQueryDto>> idListMap = commentQueryDtos.stream().collect(Collectors.groupingBy(CommentQueryDto::getProject_Id));
         projectQueryDtosCollect.forEach(p -> p.setComments(idListMap.get(p.getProject_Id())));
 
         return projectQueryDtosCollect;
-
     }
 }
