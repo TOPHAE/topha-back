@@ -1,7 +1,9 @@
 package com.make.projects.exception;
 
 import com.make.projects.exception.valiationexception.ValidErrorResponse;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -34,7 +36,7 @@ public class GlobalExceptionHandler {
         CustomErrorResponse response = new CustomErrorResponse();
         HttpStatus status = null;
 
-        if (e instanceof DuplicatedUsernameException) {
+        if (e instanceof DuplicateKeyException) {
             status = HttpStatus.BAD_REQUEST;
             response.setStatusCode(status.value());
             response.setMessage(e.getMessage());
@@ -44,6 +46,10 @@ public class GlobalExceptionHandler {
             response.setMessage(e.getMessage());
         } else if (e instanceof IllegalArgumentException){
             status = HttpStatus.BAD_REQUEST;
+            response.setStatusCode(status.value());
+            response.setMessage(e.getMessage());
+        } else if(e instanceof NullPointerException){
+            status = HttpStatus.NOT_FOUND;
             response.setStatusCode(status.value());
             response.setMessage(e.getMessage());
         }else{
