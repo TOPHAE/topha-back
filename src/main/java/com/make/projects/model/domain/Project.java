@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Builder
+@Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -35,7 +36,6 @@ public class Project extends CommonDate {
     private String userSpec;
 
 
-
     @ElementCollection //값 타입 컬렉션입니다
     @CollectionTable(name ="TECH",joinColumns = @JoinColumn(name = "projectId")) //컬렉션 테이블 생성,외래키로지정 만들어질 테이블에
     @Column(name = "TECH")
@@ -55,25 +55,18 @@ public class Project extends CommonDate {
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
     private final List<Comments> comments = new ArrayList<>();
 
-/*
-    public void setProjectComment(Comments comment){
-        comment.setProject(this);
-        comments.add(comment);
+    public void setProjectComments(Comments comments){
+    this.comments.add(comments);
+    comments.setProject(this);
     }
-*/
-
-    public void setProjectUser(Users user){
-     /*   if(user != null){
-            this.user.getProjects().remove(this);
-        }*/
-        this.user = user;
+ /*   public void setProjectUser(Users user){
+        this.user=user;
         user.getProjects().add(this);
+    }*/
+    public void increateViewCount(){
+        this.viewCount = viewCount + 1;
     }
 
-    public int increateViewCount(){
-        this.viewCount = viewCount + 1;
-        return viewCount;
-    }
 
 
 }
