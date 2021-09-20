@@ -1,17 +1,15 @@
 package com.make.projects.model.dto.lookup;
 
-
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.Set;
 
-
-
 @Data
+@NoArgsConstructor
 public class ProjectQueryDto {
-
     private Long project_Id;
     private String title;
     private String nickname;
@@ -22,10 +20,8 @@ public class ProjectQueryDto {
     private Set<String> spec;
     private List<CommentQueryDto> comments;
 
-
     @Builder
-    @QueryProjection
-    public ProjectQueryDto(Long project_Id, String title, String nickname, String user_Spec, Integer like_Count, Integer view_Count,  Set<String> tech, Set<String> spec) {
+    public ProjectQueryDto(Long project_Id, String title, String nickname, String user_Spec, Integer like_Count, Integer view_Count, Set<String> tech, Set<String> spec) {
         this.project_Id = project_Id;
         this.title = title;
         this.nickname = nickname;
