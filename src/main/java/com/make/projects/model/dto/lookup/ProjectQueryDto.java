@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
+@Builder
 @NoArgsConstructor
 public class ProjectQueryDto {
     private Long project_Id;
@@ -18,9 +19,9 @@ public class ProjectQueryDto {
     private Integer view_Count;
     private Set<String> tech;
     private Set<String> spec;
-    private List<CommentQueryDto> comments;
 
-    @Builder
+
+    @QueryProjection
     public ProjectQueryDto(Long project_Id, String title, String nickname, String user_Spec, Integer like_Count, Integer view_Count, Set<String> tech, Set<String> spec) {
         this.project_Id = project_Id;
         this.title = title;

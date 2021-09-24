@@ -17,7 +17,7 @@ import java.util.Set;
 @Component
 public class initDb {
 
-    private final InitService initService;
+   /* private final InitService initService;
 
     @Autowired
     public initDb(InitService initService){
@@ -38,7 +38,7 @@ public class initDb {
 
        public void dbInit1() {
 
-       /*    Users users = Users.builder()
+       Users users = Users.builder()
                    .nickname("김우진")
                    .provider(Provider.google)
                    .roles("ROLE_USER")
@@ -107,11 +107,11 @@ public class initDb {
            em.persist(comment1);
 
            comment2.setCommentProject(project1);
-           comment3.setCommentProject(project1);*/
+           comment3.setCommentProject(project1);
 
         }
 
 
-    }
+    }*/
 
 }

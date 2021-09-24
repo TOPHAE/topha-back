@@ -13,9 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -61,10 +58,8 @@ public class ProjectService {
         Project project = projectRepository.selectOneProject(projectId);
         project.increateViewCount();
         Long id = project.getId();
-        List<CommentQueryDto> comments = projectRepository.selectOneComment(id);
-        Map<Long, List<CommentQueryDto>> IdListMap = comments.stream().collect(Collectors.groupingBy(CommentQueryDto::getProject_Id));
 
-        ProjectQueryDto projectQueryDto = ProjectQueryDto.builder()
+        return ProjectQueryDto.builder()
                 .project_Id(project.getId())
                 .tech(project.getTech())
                 .user_Spec(project.getUserSpec())
@@ -74,31 +69,11 @@ public class ProjectService {
                 .spec(project.getSpec())
                 .nickname(project.getNickname())
                 .build();
-        projectQueryDto.setComments(IdListMap.get(id));
-
-        return projectQueryDto;
     }
 
-    public List<ProjectQueryDto> selectAll(Pageable pageable){
-        Page<Project> projects = projectRepository.selectAllProject(pageable);
-        List<Long> projectIds = projects.stream().map(Project::getId).collect(Collectors.toList());
-        List<ProjectQueryDto> projectQueryDtosCollect = projects.stream().map(s -> {
-            return ProjectQueryDto.builder()
-                    .nickname(s.getNickname())
-                    .spec(s.getSpec())
-                    .view_Count(s.getViewCount())
-                    .like_Count(s.getLikeCount())
-                    .title(s.getTitle())
-                    .project_Id(s.getId())
-                    .user_Spec(s.getUserSpec())
-                    .tech(s.getTech())
-                    .build();
-        }).collect(Collectors.toList());
+    public Page<ProjectQueryDto> selectAll(Pageable pageable){
+        return projectRepository.selectAllProject(pageable);
 
-        List<CommentQueryDto> commentQueryDtos = projectRepository.selectAllComment(projectIds);
-        Map<Long, List<CommentQueryDto>> idListMap = commentQueryDtos.stream().collect(Collectors.groupingBy(CommentQueryDto::getProject_Id));
-        projectQueryDtosCollect.forEach(p -> p.setComments(idListMap.get(p.getProject_Id())));
 
-        return projectQueryDtosCollect;
     }
 }

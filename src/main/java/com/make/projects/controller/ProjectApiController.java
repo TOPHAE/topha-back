@@ -39,8 +39,8 @@ public class ProjectApiController {
 
     //프로젝트 게시물 전체조회
     @GetMapping("/project/selectAll")
-    public Result<List<ProjectQueryDto>> projectSelectAll(@PageableDefault(size = 1) Pageable pageable){
-        List<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable);
+    public Result<Page<ProjectQueryDto>> projectSelectAll(@PageableDefault(size = 10) Pageable pageable){
+        Page<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable);
         return new Result<>(projectQueryDtos,HttpStatus.OK.value());
     }
 

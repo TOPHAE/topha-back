@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 public class Comments extends CommonDate {
 

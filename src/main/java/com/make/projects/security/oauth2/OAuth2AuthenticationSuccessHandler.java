@@ -64,12 +64,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
         String token = jwtUtil.createToken(authentication);
-        String refreshToken = jwtUtil.createRefreshToken(authentication);
+        //String refreshToken = jwtUtil.createRefreshToken(authentication);
 
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", token)
-                .queryParam("refreshToken", refreshToken)
+                //.queryParam("refreshToken", refreshToken)
                 .build().toUriString();
     }
     protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
