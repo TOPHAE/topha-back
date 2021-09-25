@@ -11,15 +11,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CommentQueryDto {
     private Long project_Id;
+    private Long commentId;
     private String content;
 
 
 
     @QueryProjection
-    public CommentQueryDto(Long project_Id, String content) {
+    public CommentQueryDto(Long project_Id, Long commentId, String content) {
         this.project_Id = project_Id;
+        this.commentId = commentId;
         this.content = content;
-
     }
 }
 
