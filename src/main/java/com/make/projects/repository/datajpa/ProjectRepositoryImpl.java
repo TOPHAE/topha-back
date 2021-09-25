@@ -1,8 +1,6 @@
 package com.make.projects.repository.datajpa;
 
 import com.make.projects.model.domain.*;
-import com.make.projects.model.dto.lookup.ProjectQueryDto;
-import com.make.projects.model.dto.lookup.QProjectQueryDto;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -11,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-
 import static com.make.projects.model.domain.QProject.project;
 import static com.make.projects.model.domain.QUsers.users;
 
@@ -29,29 +26,21 @@ public class ProjectRepositoryImpl implements CustomProjectRepository{
 
     @Override
     public Project selectOneProject(Long projectId) {
-        return queryFactory
+       return queryFactory
                 .select(project)
                 .from(project)
-                .where(project.id.in(projectId))
+                .join(project.user, users)
+                .fetchJoin()
+                .where(project.id.eq(projectId))
                 .fetchOne();
     }
 
 
-
     @Override
-    public Page<ProjectQueryDto> selectAllProject(Pageable pageable) {
+    public Page<Project> selectAllProject(Pageable pageable) {
 
-        QueryResults<ProjectQueryDto> result = queryFactory
-                .select(new QProjectQueryDto(
-                        project.id,
-                        project.title,
-                        users.nickname,
-                        project.userSpec,
-                        project.likeCount,
-                        project.viewCount,
-                        project.tech,
-                        project.spec
-                ))
+        QueryResults<Project> result = queryFactory
+                .select(project)
                 .from(project)
                 .leftJoin(project.user, users)
                 .where(project.user.userId.eq(users.userId))
@@ -59,25 +48,10 @@ public class ProjectRepositoryImpl implements CustomProjectRepository{
                 .limit(pageable.getPageSize())
                 .fetchResults();
 
-        List<ProjectQueryDto> content = result.getResults();
-        long total = result.getTotal();//count 숫자
+        List<Project> content = result.getResults();
+        long total = result.getTotal();
 
-        return new PageImpl<>(content,pageable,total);
+        return new PageImpl<>(content, pageable, total);
     }
-
-
-
-   /* @Override
-    public List<CommentQueryDto> selectAllComment(List<Long> projectId) {
-        return queryFactory
-                .select(new QCommentQueryDto(
-                        project.id, comments.content
-                ))
-                .from(comments)
-                .leftJoin(comments.project, project)
-                .where(comments.project.id.in(projectId))
-                .fetch();
-    }*/
-
 
 }

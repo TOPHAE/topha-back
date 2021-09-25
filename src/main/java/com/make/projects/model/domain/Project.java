@@ -1,6 +1,6 @@
 package com.make.projects.model.domain;
 
-import com.nimbusds.jose.shaded.json.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,12 +41,13 @@ public class Project extends CommonDate {
     @Column(name = "TECH")
     private Set<String> tech = new HashSet<>();
 
+
     @ElementCollection //값 타입 컬렉션입니다
     @CollectionTable(name ="SPEC",joinColumns = @JoinColumn(name = "projectId")) //컬렉션 테이블 생성,외래키로지정 만들어질 테이블에
     @Column(name = "SPEC")
     private Set<String> spec = new HashSet<>();
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id")
     private Users user;

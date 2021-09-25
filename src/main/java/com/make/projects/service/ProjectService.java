@@ -5,7 +5,9 @@ import com.make.projects.model.domain.Project;
 import com.make.projects.model.dto.ProjectSaveDto;
 import com.make.projects.model.dto.lookup.CommentQueryDto;
 import com.make.projects.model.dto.lookup.ProjectQueryDto;
+import com.make.projects.model.dto.lookup.ProjectQueryOneDto;
 import com.make.projects.model.dto.lookup.ResponseProjectDto;
+import com.make.projects.repository.datajpa.CommentRepository;
 import com.make.projects.repository.datajpa.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
 
 
 @Service
@@ -23,6 +28,7 @@ import java.util.stream.Collectors;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public ResponseProjectDto saveProject(ProjectSaveDto projectSaveDto, CustomUserDetails customUserDetails) {
@@ -54,26 +60,50 @@ public class ProjectService {
 
 
     @Transactional
-    public ProjectQueryDto selectOne(Long projectId) {
-        Project project = projectRepository.selectOneProject(projectId);
-        project.increateViewCount();
-        Long id = project.getId();
+    public ProjectQueryOneDto selectOne(Long projectId) {
 
-        return ProjectQueryDto.builder()
+        Project project = projectRepository.selectOneProject(projectId);
+        Long projectIds = project.getId();
+        project.increateViewCount();
+        List<CommentQueryDto> commentQueryDtos =
+                commentRepository.selectComments(projectIds);
+        ProjectQueryOneDto projectQueryOneDto = ProjectQueryOneDto
+                .builder()
                 .project_Id(project.getId())
-                .tech(project.getTech())
-                .user_Spec(project.getUserSpec())
-                .title(project.getTitle())
                 .like_Count(project.getLikeCount())
-                .view_Count(project.getViewCount())
-                .spec(project.getSpec())
                 .nickname(project.getNickname())
+                .spec(project.getSpec())
+                .tech(project.getTech())
+                .title(project.getTitle())
+                .user_Spec(project.getUserSpec())
+                .view_Count(project.getViewCount())
+                .img_Url(project.getUser().getImgUrl())
+                .roles(project.getUser().getRoles())
+                .commentQueryDtos(commentQueryDtos)
                 .build();
+
+        return projectQueryOneDto;
     }
 
-    public Page<ProjectQueryDto> selectAll(Pageable pageable){
-        return projectRepository.selectAllProject(pageable);
+    public List<ProjectQueryDto> selectAll(Pageable pageable){
 
+        Page<Project> projects = projectRepository.selectAllProject(pageable);
+        List<ProjectQueryDto> collect = projects.stream().map(s -> {
+            return ProjectQueryDto
+                    .builder()
+                    .project_Id(s.getId())
+                    .nickname(s.getNickname())
+                    .user_Spec(s.getUserSpec())
+                    .view_Count(s.getViewCount())
+                    .like_Count(s.getLikeCount())
+                    .title(s.getTitle())
+                    .spec(s.getSpec())
+                    .tech(s.getTech())
+                    .img_Url(s.getUser().getImgUrl())
+                    .roles(s.getUser().getRoles())
+                    .build();
 
+        }).collect(Collectors.toList());
+        return collect;
     }
 }

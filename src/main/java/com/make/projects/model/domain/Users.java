@@ -1,4 +1,5 @@
 package com.make.projects.model.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.make.projects.model.domain.enumType.Provider;
 import lombok.*;
 import javax.persistence.*;
@@ -48,16 +49,4 @@ public class Users extends CommonDate {
         return new ArrayList<>();
     }
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "userId=" + userId +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                ", specialty='" + specialty + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", roles='" + roles + '\'' +
-                ", provider=" + provider +
-                '}';
-    }
 }

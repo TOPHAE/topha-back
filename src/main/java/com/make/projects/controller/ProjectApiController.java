@@ -2,9 +2,11 @@ package com.make.projects.controller;
 
 
 import com.make.projects.config.auth.CustomUserDetails;
+import com.make.projects.model.domain.Project;
 import com.make.projects.model.dto.ProjectSaveDto;
 import com.make.projects.model.dto.Result;
 import com.make.projects.model.dto.lookup.ProjectQueryDto;
+import com.make.projects.model.dto.lookup.ProjectQueryOneDto;
 import com.make.projects.model.dto.lookup.ResponseProjectDto;
 import com.make.projects.repository.datajpa.CommentRepository;
 import com.make.projects.service.ProjectService;
@@ -18,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -30,18 +33,18 @@ public class ProjectApiController {
 
     //프로젝트 게시물 단일조회
     @GetMapping("/project/selectOne/{projectId}")
-    public Result<ProjectQueryDto> projectSelectOne(@PathVariable Long projectId){
+    public Result<ProjectQueryOneDto> projectSelectOne(@PathVariable Long projectId){
 
-        ProjectQueryDto projectQueryDto = projectService.selectOne(projectId);
+        ProjectQueryOneDto projectQueryDto = projectService.selectOne(projectId);
         return new Result<>(projectQueryDto,HttpStatus.OK.value());
     }
 
-
     //프로젝트 게시물 전체조회
     @GetMapping("/project/selectAll")
-    public Result<Page<ProjectQueryDto>> projectSelectAll(@PageableDefault(size = 10) Pageable pageable){
-        Page<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable);
-        return new Result<>(projectQueryDtos,HttpStatus.OK.value());
+    public Result<?> projectSelectAll(@PageableDefault(size = 10) Pageable pageable){
+        List<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable);
+
+        return new Result<>(projectQueryDtos, HttpStatus.OK.value());
     }
 
     //프로젝트 게시물 등록
