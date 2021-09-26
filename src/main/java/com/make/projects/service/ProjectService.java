@@ -16,9 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-
 
 
 @Service
@@ -35,7 +33,6 @@ public class ProjectService {
 
         Project projects = Project.builder()
                 .viewCount(0)
-                .likeCount(0)
                 .content(projectSaveDto.getContent())
                 .title(projectSaveDto.getTitle())
                 .tech(projectSaveDto.getTech().stream().map(ProjectSaveDto.techs::getKey).collect(Collectors.toSet()))
@@ -47,14 +44,11 @@ public class ProjectService {
 
         Project project = projectRepository.save(projects);
 
-
         return ResponseProjectDto.builder()
                 .userId(project.getUser().getUserId())
                 .nickname(project.getNickname())
                 .title(project.getTitle())
                 .build();
-
-
 
     }
 
@@ -70,7 +64,6 @@ public class ProjectService {
         ProjectQueryOneDto projectQueryOneDto = ProjectQueryOneDto
                 .builder()
                 .project_Id(project.getId())
-                .like_Count(project.getLikeCount())
                 .nickname(project.getNickname())
                 .spec(project.getSpec())
                 .tech(project.getTech())
@@ -85,7 +78,7 @@ public class ProjectService {
         return projectQueryOneDto;
     }
 
-    public List<ProjectQueryDto> selectAll(Pageable pageable){
+    public List<ProjectQueryDto> selectAll(Pageable pageable) {
 
         Page<Project> projects = projectRepository.selectAllProject(pageable);
         List<ProjectQueryDto> collect = projects.stream().map(s -> {
@@ -95,7 +88,6 @@ public class ProjectService {
                     .nickname(s.getNickname())
                     .user_Spec(s.getUserSpec())
                     .view_Count(s.getViewCount())
-                    .like_Count(s.getLikeCount())
                     .title(s.getTitle())
                     .spec(s.getSpec())
                     .tech(s.getTech())

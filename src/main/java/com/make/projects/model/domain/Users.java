@@ -1,5 +1,4 @@
 package com.make.projects.model.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.make.projects.model.domain.enumType.Provider;
 import lombok.*;
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import java.util.List;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Users extends CommonDate {
 
