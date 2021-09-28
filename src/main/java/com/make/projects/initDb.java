@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Component
 public class initDb {
-
+/*
     private final InitService initService;
 
     @Autowired
@@ -112,6 +112,6 @@ public class initDb {
         }
 
 
-    }
+    }*/
 
 }

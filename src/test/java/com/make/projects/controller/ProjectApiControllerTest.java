@@ -1,8 +1,8 @@
 package com.make.projects.controller;
 
-import com.make.projects.repository.datajpa.CommentRepository;
-import com.make.projects.repository.datajpa.ProjectRepository;
-import com.make.projects.repository.datajpa.UserRepository;
+import com.make.projects.repository.datajpa.comment.CommentRepository;
+import com.make.projects.repository.datajpa.project.ProjectRepository;
+import com.make.projects.repository.datajpa.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;

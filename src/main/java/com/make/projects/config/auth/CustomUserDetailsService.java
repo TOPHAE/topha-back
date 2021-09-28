@@ -3,7 +3,7 @@ package com.make.projects.config.auth;
 
 import com.make.projects.exception.authexception.OAuth2AuthenticationEx;
 import com.make.projects.model.domain.Users;
-import com.make.projects.repository.datajpa.UserRepository;
+import com.make.projects.repository.datajpa.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;

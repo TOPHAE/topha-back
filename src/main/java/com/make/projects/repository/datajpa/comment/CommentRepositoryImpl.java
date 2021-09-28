@@ -1,4 +1,4 @@
-package com.make.projects.repository.datajpa;
+package com.make.projects.repository.datajpa.comment;
 
 import com.make.projects.model.dto.lookup.CommentQueryDto;
 import com.make.projects.model.dto.lookup.QCommentQueryDto;
@@ -12,7 +12,7 @@ import java.util.List;
 import static com.make.projects.model.domain.QComments.comments;
 import static com.make.projects.model.domain.QProject.project;
 
-public class CommentRepositoryImpl implements CustomCommentRepository{
+public class CommentRepositoryImpl implements CustomCommentRepository {
 
     @PersistenceContext
     EntityManager em;

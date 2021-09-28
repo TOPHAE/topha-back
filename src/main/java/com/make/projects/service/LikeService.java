@@ -3,8 +3,8 @@ package com.make.projects.service;
 import com.make.projects.model.domain.Like;
 import com.make.projects.model.domain.Project;
 import com.make.projects.model.domain.Users;
-import com.make.projects.repository.datajpa.LikeRepository;
-import com.make.projects.repository.datajpa.ProjectRepository;
+import com.make.projects.repository.datajpa.like.LikeRepository;
+import com.make.projects.repository.datajpa.project.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +45,7 @@ public class LikeService {
         Project project = projectRepository.findById(projectId).orElseThrow();
 
         Integer projectLikeCount = likeRepository.countByProject(project).orElse(0);
-
+        project.setLikeCount(projectLikeCount);
         List<String> resultData =
                 new ArrayList<>(Arrays.asList(String.valueOf(projectLikeCount)));
 

@@ -3,7 +3,7 @@ package com.make.projects.controller;
 import com.make.projects.annotaions.LoginUser;
 import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.model.domain.Users;
-import com.make.projects.repository.datajpa.UserRepository;
+import com.make.projects.repository.datajpa.user.UserRepository;
 import com.make.projects.service.LikeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Slf4j
@@ -59,6 +58,10 @@ public class LikeApiController {
         if (customUserDetails.getUsername() != null) {
             result = likeService.addLike(customUserDetails.getUser(), projectId);
         }
+     /*   Users users = userRepository.findById(userId).get();
+        if (users != null) {
+            result = likeService.addLike(users, projectId);
+        }*/
 
         return result ?
                 new ResponseEntity<>(HttpStatus.OK)

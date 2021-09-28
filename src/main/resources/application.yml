@@ -2,7 +2,7 @@ application:
   security:
     jwt:
       secret: 5867a8374e7c0f6284b177b48faf89e1c79d72d8
-      token-validity-in-seconds: 1000000
+      token-validity-in-seconds: 50000000
       refresh-token-validity-in-seconds: 500000
       token-validity-in-seconds-for-remember-me: 2592000
 
@@ -26,7 +26,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create   #애플리케이션  실행시점에 내가가지고잇는 엔티티를지우고(테이블) 다시생성
+      ddl-auto: update   #애플리케이션  실행시점에 내가가지고잇는 엔티티를지우고(테이블) 다시생성
     properties:
       hibernate:
         #show_sql: true    #엔 sout에 출력해서  안쓰는게좋다

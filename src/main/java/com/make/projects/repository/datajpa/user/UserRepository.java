@@ -1,4 +1,4 @@
-package com.make.projects.repository.datajpa;
+package com.make.projects.repository.datajpa.user;
 
 import com.make.projects.model.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;

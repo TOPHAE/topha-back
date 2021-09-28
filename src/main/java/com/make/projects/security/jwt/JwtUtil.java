@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.sql.Ref;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -36,22 +35,7 @@ public class JwtUtil {
         this.tokenValidityInMilliseconds = 1000 * applicationProperties.getSecurity().getJwt().getTokenValidityInSeconds();
         this.tokenValidityInMillisecondsForRememberMe = 1000 * applicationProperties.getSecurity().getJwt().getTokenValidityInSecondsForRememberMe();
     }*/
-public String createRefreshToken(Authentication authentication) {
 
-    long now = (new Date()).getTime();
-     Date RefreshValidity = new Date(now + this.refreshValidityInMilliseconds);
-
-    CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-
-    return Jwts.builder()
-            .setSubject(customUserDetails.getUsername())
-            .setIssuedAt(new Date())
-            .claim("id", customUserDetails.getUsername())
-            .signWith(SignatureAlgorithm.HS512, secretKey)
-            .setExpiration(RefreshValidity)
-            .compact();
-
-}
 
     public String createToken(Authentication authentication) {
         return createToken(authentication, false);
@@ -98,6 +82,7 @@ public String createRefreshToken(Authentication authentication) {
         return claims.getSubject();
     }
 
+    //Token 유효성 확인
     public boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);

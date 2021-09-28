@@ -3,7 +3,7 @@ package com.make.projects.service;
 import com.make.projects.model.domain.Project;
 import com.make.projects.model.domain.Users;
 import com.make.projects.model.domain.enumType.Provider;
-import com.make.projects.repository.datajpa.UserRepository;
+import com.make.projects.repository.datajpa.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import java.util.HashSet;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

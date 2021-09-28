@@ -4,7 +4,7 @@ import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.model.domain.Users;
 import com.make.projects.model.dto.RequestSaveUser;
 import com.make.projects.model.dto.lookup.ResponseUserDto;
-import com.make.projects.repository.datajpa.UserRepository;
+import com.make.projects.repository.datajpa.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

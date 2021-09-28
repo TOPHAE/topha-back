@@ -21,13 +21,13 @@ public class Project extends CommonDate {
 
     private String title;
     private String nickname;
-    //@Column(name = "LIKE_COUNT")
+
     private String content;
 
-    // @Column(name = "VIEW_COUNT")
-    private int viewCount = 0;
+    private Integer viewCount = 0;
 
-    //@Column(name = "USER_SPEC")
+    private Integer likeCount = 0;
+
     private String userSpec;
 
 
@@ -56,6 +56,10 @@ public class Project extends CommonDate {
 
     public void increateViewCount() {
         this.viewCount = viewCount + 1;
+    }
+
+   public Integer getLikeCount() {
+        return likes.size();
     }
 
 
