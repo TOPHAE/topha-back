@@ -12,7 +12,6 @@ import com.make.projects.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,9 +38,9 @@ public class ProjectApiController {
 
     /*@PageableDefault(size = 10 , sort = "create_date", direction = Sort.Direction.DESC)*/
     //프로젝트 게시물 전체조회
-    @GetMapping("/project/selectAll")
-    public Result<?> projectSelectAll(@PageableDefault(size = 10) Pageable pageable,
-                                     @RequestBody ProjectConditionSearch projectConditionSearch){
+    @GetMapping(value = "/project/selectAll",produces = "application/json")
+    public Result<?> projectSelectAll(@RequestBody ProjectConditionSearch projectConditionSearch,
+                                      @PageableDefault(size = 10) Pageable pageable){
         List<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable,projectConditionSearch);
 
         return new Result<>(projectQueryDtos, HttpStatus.OK.value());
