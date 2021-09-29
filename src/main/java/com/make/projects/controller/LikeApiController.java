@@ -58,10 +58,6 @@ public class LikeApiController {
         if (customUserDetails.getUsername() != null) {
             result = likeService.addLike(customUserDetails.getUser(), projectId);
         }
-     /*   Users users = userRepository.findById(userId).get();
-        if (users != null) {
-            result = likeService.addLike(users, projectId);
-        }*/
 
         return result ?
                 new ResponseEntity<>(HttpStatus.OK)
