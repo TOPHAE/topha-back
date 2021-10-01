@@ -36,9 +36,12 @@ public class ProjectApiController {
         return new Result<>(projectQueryDto,HttpStatus.OK.value());
     }
 
+    /*https://footprint-of-nawin.tistory.com/71
+    * 원인
+    */
     /*@PageableDefault(size = 10 , sort = "create_date", direction = Sort.Direction.DESC)*/
     //프로젝트 게시물 전체조회
-    @GetMapping(value = "/project/selectAll",produces = "application/json")
+    @PostMapping(value = "/project/selectAll",produces = "application/json")
     public Result<?> projectSelectAll(@RequestBody ProjectConditionSearch projectConditionSearch,
                                       @PageableDefault(size = 10) Pageable pageable){
         List<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable,projectConditionSearch);

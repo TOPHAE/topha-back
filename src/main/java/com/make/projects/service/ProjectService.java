@@ -84,12 +84,8 @@ public class ProjectService {
     public List<ProjectQueryDto> selectAll(Pageable pageable, ProjectConditionSearch projectConditionSearch) {
 
         Page<Project> projects = projectRepository.selectAllProject(pageable, projectConditionSearch);
-        
-/*      List<Long> projectIds = projects.stream().map(Project::getId).collect(Collectors.toList());
-        List<LikeQueryDto> likes = likeRepository.selectAllLikes(projectIds);
-        Map<Long, List<LikeQueryDto>> IdListMap = likes.stream().collect(Collectors.groupingBy(LikeQueryDto::getProject_id));*/
 
-        List<ProjectQueryDto> collect = projects.stream().map(s -> {
+        return projects.stream().map(s -> {
             return ProjectQueryDto
                     .builder()
                     .project_Id(s.getId())
@@ -105,8 +101,5 @@ public class ProjectService {
                     .build();
 
         }).collect(Collectors.toList());
-
-        //collect.forEach(l -> l.setLike_Count(IdListMap.get(l.getProject_Id()).size()));
-        return collect;
     }
 }

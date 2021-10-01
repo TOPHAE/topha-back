@@ -11,9 +11,16 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static com.make.projects.model.domain.QProject.project;
 import static com.make.projects.model.domain.QUsers.users;
 
@@ -48,7 +55,8 @@ public class ProjectRepositoryImpl implements CustomProjectRepository {
                 .select(project)
                 .from(project)
                 .leftJoin(project.user, users)
-                .where(project.user.userId.eq(users.userId))
+                .on(project.user.userId.eq(users.userId))
+                .where(techNameEq(projectConditionSearch.getTechcondition()))
                 .orderBy(
                         SortingEq(projectConditionSearch.getSortingcondition())
                 )
@@ -61,19 +69,20 @@ public class ProjectRepositoryImpl implements CustomProjectRepository {
 
         return new PageImpl<>(content, pageable, total);
     }
+    private BooleanExpression techNameEq(String techCondition){
+        return Optional.ofNullable(techCondition).map(project.tech::contains).orElse(null);
+    }
 
     private OrderSpecifier SortingEq(String sortName) {
-        //StringUtils.hasText(sortName) ? project.likeCount.desc() : project.createDate.desc();
 
-        switch (sortName) {
-            case "like":
-                return project.likeCount.desc();
-            case "recent":
-                return project.createDate.desc();
-            case "after":
-                return project.createDate.asc();
-        }
-
+       Optional.ofNullable(sortName).stream().filter(Objects::nonNull)
+                .map(s ->{
+                    if(s.equals("like"))
+                        return project.likes.size().desc();
+                    else if (s.equals("recent"))
+                        return project.createDate.desc();
+                    return project.createDate.desc();
+                });
         return project.createDate.desc();
     }
 }
