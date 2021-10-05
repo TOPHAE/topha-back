@@ -9,5 +9,5 @@ import org.springframework.data.domain.Pageable;
 public interface CustomProjectRepository {
 
     Project selectOneProject(Long projectId);
-    Page<Project> selectAllProject(Pageable pageable, ProjectConditionSearch projectConditionSearch);
+    Page<Project> selectAllProject(Pageable pageable, ProjectConditionSearch projectConditionSearch, boolean isjavascript,boolean isSpring, boolean isPhp);
 }

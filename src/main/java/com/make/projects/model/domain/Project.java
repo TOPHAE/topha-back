@@ -1,4 +1,5 @@
 package com.make.projects.model.domain;
+import com.make.projects.model.domain.enumType.BooleanToYNConverter;
 import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -6,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Convert(converter = BooleanToYNConverter.class,attributeName = "isJava")
 @Builder
 @Setter
 @Getter
@@ -30,6 +32,8 @@ public class Project extends CommonDate {
 
     private String userSpec;
 
+    @Convert(converter = BooleanToYNConverter.class)
+    private boolean isJava = false;
 
     @ElementCollection //값 타입 컬렉션입니다
     @CollectionTable(name = "TECH", joinColumns = @JoinColumn(name = "projectId")) //컬렉션 테이블 생성,외래키로지정 만들어질 테이블에
@@ -53,6 +57,7 @@ public class Project extends CommonDate {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     Set<Like> likes = new HashSet<>();
+
 
     public void increateViewCount() {
         this.viewCount = viewCount + 1;

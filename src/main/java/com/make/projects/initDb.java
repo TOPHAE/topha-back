@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Component
 public class initDb {
-/*
+
     private final InitService initService;
 
     @Autowired
@@ -34,7 +34,7 @@ public class initDb {
     @RequiredArgsConstructor
     static class InitService {
 
-        private final EntityManager em;
+  private final EntityManager em;
 
        public void dbInit1() {
 
@@ -61,7 +61,7 @@ public class initDb {
            Set<String> spec = new HashSet<>();
            spec.add("백엔드");
            Set<String> tech = new HashSet<>();
-           tech.add("java");
+           tech.add("javascript");
            tech.add("spring");
 
 
@@ -93,6 +93,40 @@ public class initDb {
 
            em.persist(project1);
 
+           Set<String> tech2 = new HashSet<>();
+           tech2.add("php");
+           tech2.add("spring");
+
+           Set<String> tech3 = new HashSet<>();
+           tech.add("php");
+           Project project2 = Project.builder()
+                   .user(users)
+                   .nickname(users.getNickname())
+                   .spec(spec)
+                   .userSpec("백엔드")
+                   .tech(tech2)
+                   .viewCount(10)
+                   .title("우리프로젝트오세요~")
+                   .likeCount(10)
+                   .build();
+
+
+           em.persist(project2);
+
+           Project project3 = Project.builder()
+                   .user(users)
+                   .nickname(users.getNickname())
+                   .spec(spec)
+                   .userSpec("백엔드")
+                   .tech(tech3)
+                   .viewCount(10)
+                   .title("우리프로젝트오세요~")
+                   .likeCount(10)
+                   .build();
+
+
+           em.persist(project3);
+
            Comments comment = new Comments("안녕하세연");
            em.persist(comment);
            Comments comment1 = new Comments("보이루");
@@ -112,6 +146,6 @@ public class initDb {
         }
 
 
-    }*/
+    }
 
 }

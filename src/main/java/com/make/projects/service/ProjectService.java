@@ -15,8 +15,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ProjectService {
 
+    private final EntityManager em;
     private final ProjectRepository projectRepository;
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
@@ -81,10 +85,44 @@ public class ProjectService {
                 .build();
     }
 
-    public List<ProjectQueryDto> selectAll(Pageable pageable, ProjectConditionSearch projectConditionSearch) {
+    public Set<ProjectQueryDto> selectAll(Pageable pageable, ProjectConditionSearch projectConditionSearch) {
+        boolean isJavascript = false;
+        boolean isSpring = false;
+        boolean isPhp = false;
+        if (projectConditionSearch.getTechcondition().contains("javascript"))
+            isJavascript = true;
+        if (projectConditionSearch.getTechcondition().contains("spring"))
+            isSpring = true;
+        if (projectConditionSearch.getTechcondition().contains("php"))
+            isPhp = true;
+      /*  boolean isJavascript = false;
+        boolean isTypescript = false;
+        boolean isJava = false;
+        boolean isPhp = false;
+        boolean isFlutter = false;
+        boolean isSwift = false;
+        boolean isCpp = false;
+        boolean isCsharp = false;
 
-        Page<Project> projects = projectRepository.selectAllProject(pageable, projectConditionSearch);
+        if (projectConditionSearch.getTechcondition().contains("javascript"))
+            isJavascript = true;
+        if (projectConditionSearch.getTechcondition().contains("typescript"))
+            isTypescript = true;
+        if (projectConditionSearch.getTechcondition().contains("java"))
+            isJava = true;
+        if (projectConditionSearch.getTechcondition().contains("php"))
+            isPhp = true;
+        if (projectConditionSearch.getTechcondition().contains("flutter"))
+            isFlutter = true;
+        if (projectConditionSearch.getTechcondition().contains("swift"))
+            isSwift = true;
+        if (projectConditionSearch.getTechcondition().contains("cpp"))
+            isCpp = true;
+        if (projectConditionSearch.getTechcondition().contains("csharp"))
+            isCsharp = true;*/
 
+
+        Page<Project> projects = projectRepository.selectAllProject(pageable, projectConditionSearch, isJavascript,isSpring,isPhp);
         return projects.stream().map(s -> {
             return ProjectQueryDto
                     .builder()
@@ -100,6 +138,6 @@ public class ProjectService {
                     .roles(s.getUser().getRoles())
                     .build();
 
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toSet());
     }
 }

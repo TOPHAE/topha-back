@@ -18,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 
 @Slf4j
@@ -41,12 +42,12 @@ public class ProjectApiController {
     */
     /*@PageableDefault(size = 10 , sort = "create_date", direction = Sort.Direction.DESC)*/
     //프로젝트 게시물 전체조회
-    @PostMapping(value = "/project/selectAll",produces = "application/json")
+    @PostMapping(value = "/project/selectAll")
     public Result<?> projectSelectAll(@RequestBody ProjectConditionSearch projectConditionSearch,
                                       @PageableDefault(size = 10) Pageable pageable){
-        List<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable,projectConditionSearch);
+        //Set<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable,projectConditionSearch);
 
-        return new Result<>(projectQueryDtos, HttpStatus.OK.value());
+        return new Result<>(projectService.selectAll(pageable,projectConditionSearch), HttpStatus.OK.value());
     }
 
     //프로젝트 게시물 등록
