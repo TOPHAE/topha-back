@@ -5,7 +5,6 @@ import com.make.projects.config.auth.CustomUserDetails;
 import com.make.projects.model.dto.ProjectConditionSearch;
 import com.make.projects.model.dto.ProjectSaveDto;
 import com.make.projects.model.dto.Result;
-import com.make.projects.model.dto.lookup.ProjectQueryDto;
 import com.make.projects.model.dto.lookup.ProjectQueryOneDto;
 import com.make.projects.model.dto.lookup.ResponseProjectDto;
 import com.make.projects.service.ProjectService;
@@ -17,8 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Set;
+
 
 
 @Slf4j
@@ -32,9 +30,7 @@ public class ProjectApiController {
     //프로젝트 게시물 단일조회
     @GetMapping("/project/selectOne/{projectId}")
     public Result<ProjectQueryOneDto> projectSelectOne(@PathVariable Long projectId){
-
-        ProjectQueryOneDto projectQueryDto = projectService.selectOne(projectId);
-        return new Result<>(projectQueryDto,HttpStatus.OK.value());
+        return new Result<>( projectService.selectOne(projectId),HttpStatus.OK.value());
     }
 
     /*https://footprint-of-nawin.tistory.com/71
@@ -45,8 +41,6 @@ public class ProjectApiController {
     @PostMapping(value = "/project/selectAll")
     public Result<?> projectSelectAll(@RequestBody ProjectConditionSearch projectConditionSearch,
                                       @PageableDefault(size = 10) Pageable pageable){
-        //Set<ProjectQueryDto> projectQueryDtos = projectService.selectAll(pageable,projectConditionSearch);
-
         return new Result<>(projectService.selectAll(pageable,projectConditionSearch), HttpStatus.OK.value());
     }
 
@@ -54,8 +48,7 @@ public class ProjectApiController {
     @PostMapping("/project/save")
     public Result<ResponseProjectDto> projectSave(@Valid @RequestBody ProjectSaveDto project, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         log.info("ProjectSaveDto={}",project);
-        ResponseProjectDto responseProjectDto = projectService.saveProject(project, customUserDetails);
-        return new Result<>(responseProjectDto, HttpStatus.OK.value());
+        return new Result<>( projectService.saveProject(project, customUserDetails), HttpStatus.OK.value());
 
     }
 
