@@ -89,12 +89,15 @@ public class ProjectService {
         boolean isJavascript = false;
         boolean isSpring = false;
         boolean isPhp = false;
+        boolean isReact = false;
         if (projectConditionSearch.getTechcondition().contains("javascript"))
             isJavascript = true;
         if (projectConditionSearch.getTechcondition().contains("spring"))
             isSpring = true;
         if (projectConditionSearch.getTechcondition().contains("php"))
             isPhp = true;
+        if (projectConditionSearch.getTechcondition().contains("react"))
+            isReact = true;
       /*  boolean isJavascript = false;
         boolean isTypescript = false;
         boolean isJava = false;
