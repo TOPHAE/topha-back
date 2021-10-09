@@ -52,7 +52,6 @@ public class ProjectRepositoryImpl implements CustomProjectRepository {
                 .fetchOne();
     }
 
-    /*techNameEq(projectConditionSearch.getTechcondition()),*/
     @Override
     public Page<Project> selectAllProject(Pageable pageable, ProjectConditionSearch projectConditionSearch,boolean isjava,boolean isSpring, boolean isPhp) {
 
