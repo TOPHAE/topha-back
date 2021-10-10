@@ -90,6 +90,7 @@ public class ProjectService {
         boolean isSpring = false;
         boolean isPhp = false;
         boolean isReact = false;
+        boolean isPython = false;
         if (projectConditionSearch.getTechcondition().contains("javascript"))
             isJavascript = true;
         if (projectConditionSearch.getTechcondition().contains("spring"))
@@ -98,6 +99,8 @@ public class ProjectService {
             isPhp = true;
         if (projectConditionSearch.getTechcondition().contains("react"))
             isReact = true;
+        if (projectConditionSearch.getTechcondition().contains("python"))
+            isPython = true;
       /*  boolean isJavascript = false;
         boolean isTypescript = false;
         boolean isJava = false;
