@@ -21,7 +21,6 @@ import java.util.List;
 public class LikeApiController {
 
     private final LikeService likeService;
-    private final UserRepository userRepository;
 
     @ApiOperation(value = "좋아요 카운트")
     @GetMapping("/like/{projectId}")
