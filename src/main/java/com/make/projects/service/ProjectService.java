@@ -128,7 +128,7 @@ public class ProjectService {
             isCsharp = true;*/
 
 
-        Page<Project> projects = projectRepository.selectAllProject(pageable, projectConditionSearch, isJavascript,isSpring,isPhp);
+        Page<Project> projects = projectRepository.selectAllProject(pageable, projectConditionSearch, isJavascript,isSpring,isPhp,isReact,isPython);
         return projects.stream().map(s -> {
             return ProjectQueryDto
                     .builder()
