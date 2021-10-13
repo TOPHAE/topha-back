@@ -53,15 +53,14 @@ public class ProjectRepositoryImpl implements CustomProjectRepository {
     }
 
     @Override
-    public Page<Project> selectAllProject(Pageable pageable, ProjectConditionSearch projectConditionSearch,boolean isjava,boolean isSpring, boolean isPhp) {
-
+    public Page<Project> selectAllProject(Pageable pageable, ProjectConditionSearch projectConditionSearch, boolean isjavascript, boolean isSpring, boolean isPhp, boolean isReact, boolean isPython) {
         QueryResults<Project> result = queryFactory
                 .select(project)
                 .from(project)
                 .leftJoin(project.user, users)
                 .on(project.user.userId.eq(users.userId))
                 .where(
-                        techNameEq(projectConditionSearch.getTechcondition(),isjava,isSpring,isPhp)
+                        techNameEq(projectConditionSearch.getTechcondition(),isjavascript,isSpring,isPhp,isReact,isPython)
                 )
                 .orderBy(
                         SortingEq(projectConditionSearch.getSortingcondition())
@@ -76,8 +75,9 @@ public class ProjectRepositoryImpl implements CustomProjectRepository {
         return new PageImpl<>(content, pageable, total);
     }
 
-    private BooleanExpression techNameEq(Set<Tech> techCondition,boolean isjava,boolean isSpring, boolean isPhp) {
-        if(isjava) {
+
+    private BooleanExpression techNameEq(Set<Tech> techCondition,boolean isJavaScript,boolean isSpring, boolean isPhp,boolean isReact,boolean isPython) {
+        if(isJavaScript) {
             for (Tech tech : techCondition) {
                 project.tech.contains(tech.getTechItem());
             }
