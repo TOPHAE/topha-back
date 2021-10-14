@@ -27,7 +27,6 @@ public class ProjectQueryOneDto {
     private String roles;
     private List<CommentQueryDto> commentQueryDtos;
 
-    @Builder
     public ProjectQueryOneDto(Long project_Id, String title, String nickname, String user_Spec, Integer like_Count, Integer view_Count, Set<String> tech, Set<String> spec, String img_Url, String roles) {
         this.project_Id = project_Id;
         this.title = title;
