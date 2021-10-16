@@ -27,7 +27,7 @@ public class ProjectApiController {
 
     private final ProjectService projectService;
 
-    //프로젝트 게시물 단일조회
+
     @GetMapping("/project/selectOne/{projectId}")
     public Result<ProjectQueryOneDto> projectSelectOne(@PathVariable Long projectId){
         return new Result<>( projectService.selectOne(projectId),HttpStatus.OK.value());
@@ -44,7 +44,7 @@ public class ProjectApiController {
         return new Result<>(projectService.selectAll(pageable,projectConditionSearch), HttpStatus.OK.value());
     }
 
-    //프로젝트 게시물 등록
+
     @PostMapping("/project/save")
     public Result<ResponseProjectDto> projectSave(@Valid @RequestBody ProjectSaveDto project, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         log.info("ProjectSaveDto={}",project);
