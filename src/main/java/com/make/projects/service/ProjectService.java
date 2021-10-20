@@ -101,7 +101,7 @@ public class ProjectService {
             isReact = true;
         if (projectConditionSearch.getTechcondition().contains("python"))
             isPython = true;
-      /*  boolean isJavascript = false;
+        boolean isJavascript = false;
         boolean isTypescript = false;
         boolean isJava = false;
         boolean isPhp = false;
@@ -125,7 +125,7 @@ public class ProjectService {
         if (projectConditionSearch.getTechcondition().contains("cpp"))
             isCpp = true;
         if (projectConditionSearch.getTechcondition().contains("csharp"))
-            isCsharp = true;*/
+            isCsharp = true;
 
 
         Page<Project> projects = projectRepository.selectAllProject(pageable, projectConditionSearch, isJavascript,isSpring,isPhp,isReact,isPython);
