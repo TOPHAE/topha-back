@@ -2,7 +2,7 @@ package com.make.projects.controller;
 
 import com.make.projects.annotaions.LoginUser;
 import com.make.projects.config.auth.CustomUserDetails;
-import com.make.projects.model.domain.Users;
+import com.make.projects.model.domain.User;
 import com.make.projects.model.dto.RequestSaveUser;
 import com.make.projects.model.dto.Result;
 import com.make.projects.model.dto.lookup.ResponseUserDto;
@@ -22,9 +22,9 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @GetMapping("/auth/userInfo")
-    public Result<?> signup(@AuthenticationPrincipal CustomUserDetails userDetails,@LoginUser Users loginUser) {
-        log.info("유저 로그인={}", userDetails.getUser());
+    @PostMapping("/auth/userInfo")
+    public Result<?> signup(@AuthenticationPrincipal CustomUserDetails userDetails,@LoginUser User loginUser) {
+
         ResponseUserDto responseUserDto = userService.saveUser(userDetails.getUser());
         return new Result<>(responseUserDto, HttpStatus.OK.value());
     }
