@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Users extends CommonDate {
+public class User extends CommonDate {
 
     @Id
     @GeneratedValue
