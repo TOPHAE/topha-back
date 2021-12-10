@@ -1,7 +1,7 @@
 package com.make.projects.service;
 
 import com.make.projects.config.auth.CustomUserDetails;
-import com.make.projects.model.domain.Users;
+import com.make.projects.model.domain.User;
 import com.make.projects.model.dto.RequestSaveUser;
 import com.make.projects.model.dto.lookup.ResponseUserDto;
 import com.make.projects.repository.datajpa.user.UserRepository;
@@ -19,24 +19,23 @@ public class UserService {
     @Transactional
     public ResponseUserDto updateUser(RequestSaveUser requestSaveUser, CustomUserDetails customUserDetails){
 
-        Users users = userRepository.findById(customUserDetails.getUser().getUserId()).get();
-        users.setNickname(requestSaveUser.getNickname());
-        users.setSpecialty(requestSaveUser.getSpecialty());
+        User User = userRepository.findById(customUserDetails.getUser().getUserId()).get();
+        User.setNickname(requestSaveUser.getNickname());
+        User.setSpecialty(requestSaveUser.getSpecialty());
 
 
         return ResponseUserDto.builder()
-                .userId(users.getUserId())
-                .roles(users.getRoles())
-                .email(users.getEmail())
-                .provider(users.getProvider().name())
-                .nickname(users.getNickname())
-                .specialty(users.getSpecialty())
+                .userId(User.getUserId())
+                .roles(User.getRoles())
+                .email(User.getEmail())
+                .provider(User.getProvider().name())
+                .nickname(User.getNickname())
+                .specialty(User.getSpecialty())
                 .build();
 
     }
 
-    public ResponseUserDto saveUser(Users user) {
-
+    public ResponseUserDto saveUser(User user) {
         return ResponseUserDto.builder()
                 .specialty(user.getSpecialty())
                 .provider(user.getProvider().name())
