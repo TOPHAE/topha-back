@@ -79,7 +79,7 @@
 - 로그인후
 - ![image](https://user-images.githubusercontent.com/25544668/132957423-661a42a9-fd73-4351-9f03-9b6c61b56e4b.png)
 
-### 프로젝트 개선한점
+### 트러블 슈팅
 1. 자연쿼리,jpql 로는 동적쿼리 생성이 힘들어 QueryDsl을사용
 2. N : 1 관계에서 발생하는 N+1 문제는 FETCH JOIN 을 사용하여 해결
 3. 1 : N 관계에서 발생하는 N+1 문제와 뻥튀기는 distinict OR @BatchSize로 해결
